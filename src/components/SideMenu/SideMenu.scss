@@ -1,0 +1,92 @@
+#sidebar {
+
+    .bm-burger-button {
+        position: fixed;
+        width: 36px;
+        height: 30px;
+        left: 6rem;
+        top: 7rem;
+
+        .bm-burger-bars {
+            background: var(--gold);
+          }
+
+          .bm-burger-bars-hover {
+            transition: all .4s linear;
+            background: #d4af37;
+          }
+      }
+      
+      /*
+      Sidebar wrapper styles
+      Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
+      */
+      .bm-menu-wrap {
+        position: fixed;
+        height: 100%;
+
+            /* General sidebar styles */
+            .bm-menu {
+                // background: rgba(51, 51, 51, 1);
+                background: #373a47;
+                padding: 2.5em 1.5em 0;
+                font-size: 1.15em;
+            }
+            
+            /* Morph shape necessary with bubble or elastic */
+            .bm-morph-shape {
+                fill: #373a47;
+            }
+            
+            /* Wrapper for item list */
+            .bm-item-list {
+                color: #b8b7ad;
+                padding: 0.8em;
+            }
+            
+            /* Individual item */
+            .bm-item {
+                display: inline-block;
+
+                p {
+                    font-size: 2rem;
+                    font-weight: 700;
+                    margin: 0;
+                    color: #fff;
+                }
+
+                li {
+
+                    svg {
+                        color: var(--gold);
+                        font-size: 1.35rem;
+                    }
+
+                    a {
+                        color: #fff;
+                    }
+                }
+            }
+            
+            /* Styling of overlay */
+            .bm-overlay {
+                background: rgba(0, 0, 0, 0.3);
+            }
+            
+            .bm-cross-button:hover {
+                transition: all .4s linear;
+                color: var(--red);
+            }
+      }
+
+       /* Position and sizing of clickable cross button */
+       .bm-cross-button {
+        height: 24px;
+        width: 24px;
+      }
+      
+      /* Color/shape of close button cross */
+      .bm-cross {
+        background: #bdc3c7;
+      }
+    }
