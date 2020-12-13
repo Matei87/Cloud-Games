@@ -1,10 +1,8 @@
-#sidebar {
-
     .bm-burger-button {
         position: fixed;
         width: 36px;
         height: 30px;
-        left: 6rem;
+        left: 4rem;
         top: 7rem;
 
         .bm-burger-bars {
@@ -17,6 +15,11 @@
           }
       }
       
+       /* Styling of overlay */
+       .bm-overlay {
+        top: 92px !important;
+    }
+
       /*
       Sidebar wrapper styles
       Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
@@ -24,11 +27,13 @@
       .bm-menu-wrap {
         position: fixed;
         height: 100%;
+        top: 92px;
 
             /* General sidebar styles */
             .bm-menu {
                 // background: rgba(51, 51, 51, 1);
-                background: #373a47;
+                // background: #45a29e;
+                background: #606060;
                 padding: 2.5em 1.5em 0;
                 font-size: 1.15em;
             }
@@ -40,7 +45,6 @@
             
             /* Wrapper for item list */
             .bm-item-list {
-                color: #b8b7ad;
                 padding: 0.8em;
             }
             
@@ -58,19 +62,30 @@
                 li {
 
                     svg {
-                        color: var(--gold);
+                        color: #fff;
                         font-size: 1.35rem;
+                        font-weight: 500;
                     }
 
                     a {
-                        color: #fff;
+                        color: var(--gold);
+                        font-weight: 500;
+
+                        &.selected {
+                            color: white;
+                        }
+
+                        &:hover {
+                            transition: all .4s linear;
+                            color: #d4af37 !important;
+                        }
                     }
+
                 }
-            }
-            
-            /* Styling of overlay */
-            .bm-overlay {
-                background: rgba(0, 0, 0, 0.3);
+
+                &:focus {
+                    outline: none !important;
+                }
             }
             
             .bm-cross-button:hover {
@@ -87,6 +102,73 @@
       
       /* Color/shape of close button cross */
       .bm-cross {
-        background: #bdc3c7;
+        background: var(--gold);
       }
-    }
+
+
+// #content{
+//   text-align: center;
+//   overflow: auto;
+//   top: 45%;
+//   position: relative;
+// }
+
+// .bm-item {
+//   display: inline-block;
+
+//   /* Our sidebar item styling */
+//   text-decoration: none;
+//   margin-bottom: 10px;
+//   color: #d1d1d1;
+//   transition: color 0.2s;
+// }
+
+// .bm-item:hover {
+//   color: white;
+// }
+
+// .bm-burger-button {
+//   position: fixed;
+//   width: 36px;
+//   height: 30px;
+//   right: 36px;
+//   top: 36px;
+// }
+
+// /* Color/shape of burger icon bars */
+// .bm-burger-bars {
+//   background: #373a47;
+// }
+
+// /* Position and sizing of clickable cross button */
+// .bm-cross-button {
+//   height: 24px;
+//   width: 24px;
+// }
+
+// /* Color/shape of close button cross */
+// .bm-cross {
+//   background: #bdc3c7;
+// }
+
+// /* General sidebar styles */
+// .bm-menu {
+//   background: #000;
+//   padding: 2.5em 1.5em 0;
+//   font-size: 1.15em;
+// }
+
+// /* Morph shape necessary with bubble or elastic */
+// .bm-morph-shape {
+//   fill: #373a47;
+// }
+
+// /* Wrapper for item list */
+// .bm-item-list {
+//   color: #b8b7ad;
+// }
+
+// /* Styling of overlay */
+// .bm-overlay {
+//   background: rgba(0, 0, 0, 0.3);
+// }

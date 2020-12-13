@@ -1,12 +1,12 @@
 import React from 'react';
 import './SideMenu.scss';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { push as Menu } from 'react-burger-menu';
 
 import { GiTrophy, GiPodiumWinner } from 'react-icons/gi';
 
-const SideMenu = () => {
+const SideMenu = (props) => {
 
     // const showSettings = (event) => {
     //     event.preventDefault();
@@ -14,26 +14,21 @@ const SideMenu = () => {
 
 
     return (
-        <div id="sidebar">
-            <Menu >
-                <ul>
-                    <p>Top</p>
-                    <li>
-                        <GiTrophy />  <Link id="home" className="menu-item" to="/">Best of the year</Link>
-                    </li>
-                    <li>
-                        <GiPodiumWinner /> <Link id="about" className="menu-item" to="/about">Popular in 2020</Link>
-                    </li>
-                    <li>
-                        <GiPodiumWinner /> <Link id="contact" className="menu-item" to="/contact">Popular in 2019</Link>
-                    </li>
-                    <li>
-                        <Link className="menu-item--small" to="">Settings</Link>
-                    </li>
-                </ul>
+        <Menu {...props}>
+            <ul>
+                <p>Top</p>
+                <li>
+                    <GiTrophy />  <NavLink exact id="home" className="menu-item" to="/" activeClassName="selected" >Best of the year</NavLink>
+                </li>
+                <li>
+                    <GiPodiumWinner /> <NavLink exact id="about" className="menu-item" to="/popular-in-2019" activeClassName="selected" >Popular in 2019</NavLink>
+                </li>
+                <li>
+                    <GiPodiumWinner /> <NavLink exact id="contact" className="menu-item" to="/all-time-popular" activeClassName="selected" >All time popular</NavLink>
+                </li>
+            </ul>
 
-            </Menu>
-        </div>
+        </Menu>
     )
 }
 

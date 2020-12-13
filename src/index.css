@@ -4,7 +4,12 @@
   box-sizing: border-box;
 }
 :root {
-  --background: #112444;
+  /* --background: #112444;
+  --text: #fff;
+  --gold: #ffdf5d;
+  --red: #fb090b !important; */
+
+  --background: #0b0c10;
   --text: #fff;
   --gold: #ffdf5d;
   --red: #fb090b !important;
@@ -22,4 +27,19 @@ li {
 
 a:hover {
   text-decoration: none !important;
+}
+button:focus {
+  outline: none !important;
+}
+
+#sidebar {
+  text-align: center;
+  overflow: auto;
+  /* top: 45%;
+  position: relative; */
+  margin: 10rem 0 4rem;
+}
+
+*::selection {
+  background: var(--red);
 }
