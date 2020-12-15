@@ -4,28 +4,95 @@
 
     .container {
 
-        .row {
+        .main-wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            // grid-template-rows: repeat(3, 1fr);
+            grid-gap: 2rem;
 
-            .col-md-4 {
+            .wrapper {
+                border: none;
+                position: relative;
+                width: 100%; height: 100%;
 
-                .card {
 
-                    .card-header {
-                        
-                    }
-
-                    .card-body {
-                        
+                    .header {
+                        position: relative;
+                        padding: 0;
+                        height: 17rem;
 
                         img {
                             height: 100%; width: 100%;
+                            object-fit: cover;
+                            border-radius: .5rem .5rem 0 0;
+                        }
+
+                        &::after {
+                            content: '';
+                            display: block;
+                            position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+                            background: linear-gradient(180deg, transparent, #000);
                         }
                     }
 
-                    .card-footer {
+                    .body {
+                        padding: 1.25rem;
+                        width: 100%;
+                        position: absolute; bottom: 10%;
+                        display: flex; align-items: center;
 
+                        .platforms {
+
+                            svg {
+                                font-size: 1.12rem;
+                                fill: #fff;
+                                margin: 5px;
+
+                                &:first-of-type {
+                                    margin-left: 0;
+                                }
+                            }
+                        }
+                        
+
+                        .metacritic {
+                            margin-left: auto;
+                            padding: 1px 4px;
+                            font-weight: 600; font-size: 14px;
+                            border-radius: 4px;
+
+                            &.yellow {
+                                color: var(--gold);
+                                border: 1px solid var(--gold);
+                            }
+
+                            &.green {
+                                color: green;
+                                border: 1px solid green;
+                            }
+                        }
                     }
-                }
+
+                    .footer {
+                        color: white; background: #000;
+                        z-index: 1; width: 100%; height: 3rem;
+                        padding: .75rem 1.25rem; border-radius: 0 0 .5rem .5rem;
+                        display: flex; justify-content: left; align-items: center;
+
+                        span {
+                            font-weight: 700; font-size: 1rem;
+                            display: flex; justify-content: center; align-content: center;
+                        }
+
+                        .rating {
+
+                            img {
+                                height: 25px; width: 25px;
+                                margin: 0 0 4px 5px;
+                            }
+                        }
+                    }
+                
             }
         }
     }
