@@ -1,6 +1,5 @@
 #content {
-    // transform: translate3d(300px 0 0) !important;
-    // transition: all .5s ease 0s !important;
+    margin: 5rem 0;
 
     .container {
 
@@ -13,13 +12,13 @@
             .wrapper {
                 border: none;
                 position: relative;
-                width: 100%; height: 100%;
-
+                height: 37rem;
+                overflow: hidden; 
 
                     .header {
                         position: relative;
                         padding: 0;
-                        height: 17rem;
+                        height: 32rem;
 
                         img {
                             height: 100%; width: 100%;
@@ -36,7 +35,7 @@
                     }
 
                     .body {
-                        padding: 1.25rem;
+                        padding: 2rem;
                         width: 100%;
                         position: absolute; bottom: 10%;
                         display: flex; align-items: center;
@@ -44,7 +43,7 @@
                         .platforms {
 
                             svg {
-                                font-size: 1.12rem;
+                                font-size: 1.8rem;
                                 fill: #fff;
                                 margin: 5px;
 
@@ -58,29 +57,29 @@
                         .metacritic {
                             margin-left: auto;
                             padding: 1px 4px;
-                            font-weight: 600; font-size: 14px;
+                            font-weight: 600; font-size: 1.4rem;
                             border-radius: 4px;
 
                             &.yellow {
-                                color: var(--gold);
-                                border: 1px solid var(--gold);
+                                color: #fff;
+                                border: 1px solid #fff;
                             }
 
                             &.green {
-                                color: green;
-                                border: 1px solid green;
+                                color: var(--gold);
+                                border: 1px solid var(--gold);
                             }
                         }
                     }
 
                     .footer {
                         color: white; background: #000;
-                        z-index: 1; width: 100%; height: 3rem;
-                        padding: .75rem 1.25rem; border-radius: 0 0 .5rem .5rem;
+                        z-index: 1; width: 100%; height: 5rem;
+                        padding: 1.2rem 2rem; border-radius: 0 0 .8rem .8rem;
                         display: flex; justify-content: left; align-items: center;
 
                         span {
-                            font-weight: 700; font-size: 1rem;
+                            font-weight: 700; font-size: 1.8rem;
                             display: flex; justify-content: center; align-content: center;
                         }
 
@@ -91,6 +90,60 @@
                                 margin: 0 0 4px 5px;
                             }
                         }
+                    }
+
+                    .overlay {
+                        color: #fff;
+                        position: absolute; left: 0; right: 0; top: -8%;
+                        background: rgba(0, 0, 0, .5);
+                        width: 100%; height: 0;
+                        border-radius: .8rem;
+                        transition: all .3s linear;
+
+                        .overlay-content {
+                            position: absolute; top: 42%; left: 50%;
+                            display: flex; justify-content: space-evenly; align-content: center;
+                            transform: translate(-50%, -50%);
+                            font-size: 1.6rem;
+                            width: 100%;
+                            
+
+                            .overlay-content-details {
+                                display: flex; justify-content: center; align-content: center;
+                                margin: 0 !important;
+                                color: #fff;
+                                border: 2px solid #fff;
+                                padding: 8px 14px;
+                                border-radius: .25rem;
+                                transition: all .2s linear;
+
+                               &:hover {
+                                   background: var(--gold);
+                                   color: #fff;
+                                   border: 2px solid var(--gold);
+                                }
+                            }
+
+                            .overlay-content-favorite {
+                                display: flex; justify-content: center; align-self: center;
+                                border: 2px solid #fff;
+                                border-radius: 50%;
+                                padding: 10px;
+
+                                &:hover {
+                                    background: #fff;
+                                }
+                                &:hover svg {
+                                    fill: var(--gold);
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+
+                    &:hover .overlay {
+                        height: 108%;
                     }
                 
             }

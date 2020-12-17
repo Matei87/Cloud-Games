@@ -14,11 +14,15 @@
   --gold: #ffdf5d;
   --red: #fb090b !important;
 }
+html {
+  font-size: 10px !important;
+}
 body {
   /* background: #192442; */
   background: var(--background) !important;
   color: var(--gold) !important;
   font-family: 'Maven Pro', sans-serif !important;
+  line-height: 1.6 !important;
 }
 
 li {
@@ -37,7 +41,7 @@ button:focus {
   overflow: auto;
   /* top: 45%;
   position: relative; */
-  margin: 10rem 0 4rem;
+  /* margin: 10rem 0 4rem; */
 }
 
 *::selection {

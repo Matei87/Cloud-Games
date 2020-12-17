@@ -1,13 +1,16 @@
 import React, { useContext } from 'react';
 import './BestOfTheYear.scss';
 
+import { Link } from 'react-router-dom';
+
 import GamesContext from '../../context/GamesContext';
 import Loader from '../../components/Loader/Loader';
 
-import { AiFillWindows, AiFillAndroid, AiFillApple } from 'react-icons/ai';
+import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { SiNintendo, SiNintendoswitch, SiNintendo3Ds, SiPlaystation4 } from 'react-icons/si';
 import { MdPhoneAndroid } from 'react-icons/md';
+
 
 import Exceptional from '../../img/exceptional.png';
 import Recommended from '../../img/recommended.png';
@@ -44,6 +47,10 @@ const BestOfTheYear = () => {
         return newWords.join(' ');
     }
 
+    const linkName = (name) => {
+        return name.replace(':', '').toLowerCase().split(' ').join('-');
+    }
+
 
     return (
         <div id="content">
@@ -51,7 +58,7 @@ const BestOfTheYear = () => {
                 <div className="main-wrapper">
 
                     {isLoaded === true ? BestOfTheYear.map(data => {
-                        return <div className="wrapper">
+                        return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
                             </div>
@@ -64,28 +71,28 @@ const BestOfTheYear = () => {
 
                                     switch (platforms[0]) {
                                         case "PC":
-                                            return <AiFillWindows />;
+                                            return <AiFillWindows key={'PC'} />;
                                             break;
                                         case "Xbox One":
-                                            return <FaXbox />;
+                                            return <FaXbox key={'Xbox_One'} />;
                                             break;
                                         case "Linux":
-                                            return <FaLinux />;
+                                            return <FaLinux key={'Linux'} />;
                                             break;
                                         case "iOS":
-                                            return <MdPhoneAndroid />;
+                                            return <MdPhoneAndroid key={'iOS'} />;
                                             break;
                                         case "PlayStation 4" || "PlayStation 5":
-                                            return <FaPlaystation />;
+                                            return <FaPlaystation key={'PlayStation'} />;
                                             break;
                                         case "Nintendo Switch":
-                                            return <SiNintendoswitch />;
+                                            return <SiNintendoswitch key={'Nintendo_Switch'} />;
                                             break;
                                         case "Android":
-                                            return <AiFillAndroid />;
+                                            return <AiFillAndroid key={'Android'} />;
                                             break;
                                         case "macOS":
-                                            return <AiFillApple />;
+                                            return <AiFillApple key={'macOS'} />;
                                             break;
                                         default:
                                             return null;
@@ -101,6 +108,18 @@ const BestOfTheYear = () => {
                                 {data.ratings ? <>{setRating(data.ratings[0]['title'])}</> : null}
                             </div>
 
+                            <div className="overlay">
+                                <div className="overlay-content">
+                                    <Link
+                                        className="overlay-content-details"
+                                        to={{
+                                            pathname: `details/${linkName(data.name)}`,
+                                            state: { id: data.id }
+                                        }}
+                                    >See More</Link>
+                                    <span className="overlay-content-favorite">< AiFillHeart /></span>
+                                </div>
+                            </div>
                         </div>
                     }) : <Loader />}
 
