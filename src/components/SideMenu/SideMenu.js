@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 import { push as Menu } from 'react-burger-menu';
 
 import { GiTrophy, GiPodiumWinner } from 'react-icons/gi';
+import { AiFillStar, AiFillFire } from 'react-icons/ai';
+import { GrChapterNext } from 'react-icons/gr';
 
 const SideMenu = (props) => {
 
@@ -25,6 +27,19 @@ const SideMenu = (props) => {
                 </li>
                 <li>
                     <GiPodiumWinner /> <NavLink exact id="contact" className="menu-item" to="/all-time-popular" activeClassName="selected" >All time popular</NavLink>
+                </li>
+            </ul>
+
+            <ul>
+                <p>New Releases</p>
+                <li>
+                    <AiFillStar />  <NavLink exact id="home" className="menu-item" to="/last-30-days" activeClassName="selected" >Last 30 days</NavLink>
+                </li>
+                <li>
+                    <AiFillFire /> <NavLink exact id="about" className="menu-item" to="/this-week" activeClassName="selected" >This week</NavLink>
+                </li>
+                <li>
+                    <GrChapterNext /> <NavLink exact id="contact" className="menu-item" to="/next-week" activeClassName="selected" >Next week</NavLink>
                 </li>
             </ul>
 

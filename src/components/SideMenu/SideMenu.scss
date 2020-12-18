@@ -60,9 +60,13 @@
                 li {
 
                     svg {
-                        color: #fff;
+                        fill: #fff;
                         font-size: 2rem;
                         font-weight: 500;
+
+                        path {
+                            stroke: #fff;
+                        }
                     }
 
                     a {
