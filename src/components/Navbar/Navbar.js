@@ -10,7 +10,7 @@ import { BiUserCircle } from "react-icons/bi";
 const Navbar = () => {
 
     return (
-        <nav className="navbar navbar-expand-lg">
+        <nav className="navbar navbar-expand-lg fixed-top">
             <div className="container-fluid">
                 <Link className="navbar-brand" to="/">
                     <img src={Logo} alt="logo" />

@@ -1,51 +1,178 @@
 #details {
     position: relative;
     display: flex; flex-direction: column;
+    width: 100%; height: 100%;
+    background: transparent !important;
 
-    .details-header { 
+    .details-header {
         position: relative;
-        width: 100%; height: calc(100vh - 90px);
+        width: 100%; height: 75vh;
+        background: transparent !important;
 
-        .details-header-image {
-            width: 100%; height: calc(100vh - 90px);
-            position: relative;
+        .details-header-image { z-index: 20;
+            width: 100%; height: 100%;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover; 
+            // background-position: top;
 
-            img {
-                width: 100%; height: 100%;
-                opacity: .65;
-                object-fit: cover;
-                object-position: top;
-            }
-
-            &::after {
+            &::after { 
                 content: '';
-                display: block;
+                display: block; 
                 position: absolute; left: 0; top: 0; right: 0; bottom: 0;
-                background: linear-gradient(180deg, transparent, #000);
+                background: linear-gradient(180deg, transparent,rgba(0, 0, 0, .6));
             }
         }
 
-        .details-header-details {
-            display: flex; justify-content: start; flex-direction: column;
-            position: absolute; bottom: 0;
-            padding: 10rem;
-            color: #fff;
-            font-size: 2rem;
-            
-            .details-header-name {
-                text-align: left;
-                font-size: 3rem;
-                font-weight: 500;
-            }
-            span {
-                text-align: left;
-                font-weight: 400;
-            }
+    }
 
-            .tags {
-                font-size: 3rem;
-            }
+    .details-body {
+        width: 100%; height: 100%;
+        position: relative;
+        background: rgba(0, 0, 0, 0.2);
+        color: #000;
+
+        .container {
             
+            .details-header-details {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                align-content: center;
+                grid-gap: 3rem;
+                padding: 5rem; 
+                font-size: 2rem;
+                
+    
+    
+                .details-header-left {
+                    display: flex; flex-direction: column;
+                    padding: 0 2rem 0 2rem;
+                    text-align: left;
+                    font-weight: 400;
+
+                
+                    .details-header-name {
+                        text-align: left;
+                        font-size: 3rem;
+                        font-weight: 500;
+                    }
+
+                    .details-header-left-details {
+                        
+                        .star {
+                            margin-right: .5rem;
+                        }
+
+                        .rating {
+                            margin-right: .5rem;
+                        }
+
+                        .platforms {
+                            margin-left: .5rem;
+                        
+                            svg {
+                                margin: 0 .5rem 0;
+
+                                &:first-of-type {
+                                    margin-left: 0;
+                                }
+                            }
+                        }
+
+                    }
+
+                    .details-header-left-list {
+
+                        .details-header-left-list-title {
+                            position: relative;
+                            border-bottom: 1px solid #bfbfbf;
+
+                            &::after {
+                                content: '';
+                                display: block;
+                                position: absolute; top: 100%; left: 0;
+                                height: 2px; width: 30%;
+                                border-top: 1px solid #000;
+                            }
+                        }
+
+                        li {
+                            display: flex; justify-content: left;
+                            padding: .7rem 0 .8rem;
+                            span {
+                                width: 100%;
+                                font-size: 1.6rem;
+                                
+                            }
+                        }
+
+                        .genres {
+
+                            .genre {
+                                position: relative;
+                                margin: 0 .5rem 0;
+                                border-bottom: 1px solid #000;
+
+                                &:first-of-type {
+                                    margin-left: 0;
+                                }
+                            }
+
+                            .dot:last-of-type {
+                                display: none !important;
+                            }
+                        }
+
+                        .developers {
+
+                            .developer {
+                                position: relative;
+                                margin: 0 .5rem 0;
+                                border-bottom: 1px solid #000;
+
+                                &:first-of-type {
+                                    margin-left: 0;
+                                }
+                            }
+                                
+                            .dot:last-of-type {
+                                display: none !important;
+                            }
+                        }
+                    }
+                }
+    
+                .details-header-right {
+                    display: flex; flex-direction: column;
+    
+    
+                    span {
+                        text-align: left;
+                        font-weight: 400;
+                    }
+    
+                }
+                
+                
+    
+                .tags {
+                    font-size: 3rem;
+                }
+    
+                .pictures{
+                    height: 100%; width: 500px;
+    
+                    .image-gallery {
+                        height: 100%; width: 500px;
+    
+                        .image-gallery-left-nav, .image-gallery-right-nav {
+                            display: none;
+                        }
+                    }
+            
+                    
+                }
+            }
         }
     }
 }

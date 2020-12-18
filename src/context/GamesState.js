@@ -19,7 +19,7 @@ const GamesState = (props) => {
             try {
                 const API_KEY = '63150f4e38d549339ba029a37509023c';
                 // const API = `https://api.rawg.io/api/games?key=${API_KEY}&ordering=-rating`;
-                const BEST_OF_THE_YEAR = `https://api.rawg.io/api/games?key=${API_KEY}&dates=2020-01-01,2020-12-31&ordering=-added`;
+                const BEST_OF_THE_YEAR = `https://api.rawg.io/api/games?key=${API_KEY}&dates=2020-01-01,2020-12-31&page_size=30&ordering=-added`;
                 const BEST_OF_YEAR_2019 = `https://api.rawg.io/api/games?key=${API_KEY}&dates=2019-01-01,2019-12-31`;
                 const ALL_TIME_POPULAR = `https://api.rawg.io/api/games?key=${API_KEY}&dates=1960-01-01,2020-12-31`;
 
