@@ -92,7 +92,7 @@ const GamesState = (props) => {
                 const GAMES_LAST_30_DAYS = `https://api.rawg.io/api/games?key=${API_KEY}&dates=${thirtyDaysAgo},${todaysDate}&page_size=30`;
 
 
-                console.log(GAMES_THIS_WEEK, GAMES_NEXT_WEEK, GAMES_7_DAYS_FROM_NOW, GAMES_LAST_MONTH, GAMES_LAST_30_DAYS);
+                //console.log(GAMES_THIS_WEEK, GAMES_NEXT_WEEK, GAMES_7_DAYS_FROM_NOW, GAMES_LAST_MONTH, GAMES_LAST_30_DAYS);
                 let URLS = [BEST_OF_THE_YEAR, BEST_OF_YEAR_2019, ALL_TIME_POPULAR, GAMES_THIS_WEEK, GAMES_NEXT_WEEK, GAMES_7_DAYS_FROM_NOW, GAMES_LAST_MONTH, GAMES_LAST_30_DAYS];
                 const request = await Promise.all(URLS.map(e => fetch(e)));
                 const response = await Promise.all(request.map(e => e.json()));

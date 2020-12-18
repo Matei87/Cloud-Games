@@ -46,7 +46,7 @@
     
                 .details-header-left {
                     display: flex; flex-direction: column;
-                    padding: 0 2rem 0 2rem;
+                    padding: 0 1.3rem;
                     text-align: left;
                     font-weight: 400;
 
@@ -86,6 +86,7 @@
                         .details-header-left-list-title {
                             position: relative;
                             border-bottom: 1px solid #bfbfbf;
+                            font-weight: 500;
 
                             &::after {
                                 content: '';
@@ -140,6 +141,63 @@
                             }
                         }
                     }
+
+                    .badges {
+                        display: flex; flex-direction: column;
+
+                        .badge-title {
+                            position: relative;
+                            font-weight: 500;
+                            padding: .7rem 0 .8rem;
+                            border-bottom: 1px solid #bfbfbf;
+
+                            &::after {
+                                content: '';
+                                display: block;
+                                position: absolute; top: 100%; left: 0;
+                                height: 2px; width: 30%;
+                                border-top: 1px solid #000;
+                            }
+                        }
+
+                        .buy {
+                            display: grid;
+                            grid-template-columns: repeat(2, 1fr);
+                            grid-template-rows: repeat(4, 1fr);
+                            grid-gap: 1rem;
+                            padding: .7rem 0 .8rem;
+
+                            .store {
+                                color: #fff;
+                                width: 100%;
+                                transition: all .5s linear;
+                                background: #343a40;
+
+
+                                .badge {
+                                    font-weight: 400;
+                                    width: 100%;
+                                    padding: 1rem;
+    
+                                    svg {
+                                        font-size: 2rem;
+                                        margin-left: .5rem;
+                                    }
+                                }
+
+                                &:hover {
+                                    background: var(--gold);
+                                }
+                            }
+                            
+                        }
+                    }
+                    
+
+                    .details-header-tags {
+                        font-size: 2rem;
+                    }
+
                 }
     
                 .details-header-right {
@@ -150,28 +208,32 @@
                         text-align: left;
                         font-weight: 400;
                     }
-    
-                }
-                
-                
-    
-                .tags {
-                    font-size: 3rem;
-                }
-    
-                .pictures{
-                    height: 100%; width: 500px;
-    
-                    .image-gallery {
-                        height: 100%; width: 500px;
-    
-                        .image-gallery-left-nav, .image-gallery-right-nav {
-                            display: none;
-                        }
+
+                    .embed-responsive-item {
+                        margin-bottom: 1rem;
                     }
-            
-                    
+
+                    .pictures{
+                        height: 100%; width: 500px;
+        
+                        .image-gallery {
+                            height: 100%; width: 500px;
+        
+                            .image-gallery-left-nav, .image-gallery-right-nav {
+                                display: none;
+                            }
+    
+                            .image-gallery-thumbnails-wrapper.left, .image-gallery-thumbnails-wrapper.right {
+                                margin: 0 5px 0 0;
+                            }
+                        }
+                
+                        
+                    }
+    
                 }
+                
+                
             }
         }
     }

@@ -23,7 +23,7 @@ const Details = (props) => {
     });
     const { details: { background_image, name, rating, genres, released,
         tags, developers, publishers, esrb_rating, clip, stores, platforms }, pictures } = data;
-    //console.log(platforms);
+    console.log(data.details);
     //console.log(pictures);
     const { id } = props.location.state;
 
@@ -101,43 +101,43 @@ const Details = (props) => {
 
             switch (store[0]) {
                 case "GOG":
-                    return <a href={store[1]} target="_blank" rel="noreferrer" key={'GOG'}>
-                        <span className="badge rounded-pill bg-secondary">GOG <SiGogDotCom /></span>
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'GOG'}>
+                        <span className="badge">GOG <SiGogDotCom /></span>
                     </a>;
                     break;
                 case "Xbox Store":
-                    return <a href={store[1]} target="_blank" rel="noreferrer" key={'Xbox_Store'}>
-                        <span className="badge rounded-pill bg-secondary">Xbox Store <FaXbox /></span>
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'Xbox_Store'}>
+                        <span className="badge">Xbox Store <FaXbox /></span>
                     </a>;
                     break;
                 case "Steam":
-                    return <a href={store[1]} target="_blank" rel="noreferrer" key={'Steam'}>
-                        <span className="badge rounded-pill bg-secondary">Steam <SiSteam /></span>
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'Steam'}>
+                        <span className="badge">Steam <SiSteam /></span>
                     </a>;
                     break;
                 case "Epic Games":
-                    return <a href={store[1]} target="_blank" rel="noreferrer" key={'Epic_Games'}>
-                        <span className="badge rounded-pill bg-secondary">Epic Games <SiEpicgames /></span>
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'Epic_Games'}>
+                        <span className="badge">Epic Games <SiEpicgames /></span>
                     </a>;
                     break;
                 case "PlayStation Store":
-                    return <a href={store[1]} target="_blank" rel="noreferrer" key={'PlayStation_Store'}>
-                        <span className="badge rounded-pill bg-secondary">PlayStation Store <FaPlaystation /></span>
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'PlayStation_Store'}>
+                        <span className="badge">PlayStation Store <FaPlaystation /></span>
                     </a>;
                     break;
                 case "Nintendo Store":
-                    return <a href={store[1]} target="_blank" rel="noreferrer" key={'Nintendo_Store'}>
-                        <span className="badge rounded-pill bg-secondary">Nintendo Store <SiNintendoswitch /></span>
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'Nintendo_Store'}>
+                        <span className="badge">Nintendo Store <SiNintendoswitch /></span>
                     </a>;
                     break;
                 case "Google Play":
-                    return <a href={store[1]} target="_blank" rel="noreferrer" key={'Google_Play'}>
-                        <span className="badge rounded-pill bg-secondary">Google Play <GrGooglePlay /></span>
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'Google_Play'}>
+                        <span className="badge">Google Play <GrGooglePlay /></span>
                     </a>;
                     break;
                 case "App Store":
-                    return <a href={store[1]} target="_blank" rel="noreferrer" key={'App_Store'}>
-                        <span className="badge rounded-pill bg-secondary">App Store <GrAppleAppStore /></span>
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'App_Store'}>
+                        <span className="badge">App Store <GrAppleAppStore /></span>
                     </a>;
                     break;
 
@@ -224,8 +224,8 @@ const Details = (props) => {
                                     </li>
                                     <li className="genres">
                                         <span>Genre:</span>
-                                        {genres ? <span>{genres.map(genre => {
-                                            return <><span className="genre">{(genre.name)}</span> <span className="dot">-</span></>;
+                                        {genres ? <span>{genres.slice(0, 3).map(genre => {
+                                            return <><span className="genre">{genre.name}</span> <span className="dot">-</span></>;
                                         })} </span> : null}
                                     </li>
                                     <li className="developers">
@@ -238,19 +238,31 @@ const Details = (props) => {
                                         <span>Publisher:</span>
                                         <span>{getPublisher(publishers)}</span>
                                     </li>
+                                    <li className="recomended">
+                                        <span>Recommended:</span>
+                                        <span>{esrb_rating ?
+                                            <span className="recommended">{esrb_rating['name'] === 'Mature' ? '17+ Mature' : esrb_rating['name'] === 'Adults Only' ? '18+ Adults Only' : null}</span>
+                                            : 'Not Rated'}</span>
+                                    </li>
                                 </ul>
+
+                                <div className="badges">
+                                    <span className="badge-title">Where to Buy</span>
+                                    <div className="buy">
+                                        <>{getStores(stores)}</>
+                                    </div>
+                                </div>
+
+                                <span className="details-header-tags">Tags: {getTags(tags)}</span>
+
                             </div>
 
                             <div className="details-header-right">
 
-
-                                <span className="details-header-tags">Tags: {getTags(tags)}</span>
-
-
-                                {esrb_rating ? <span>Recomended: {esrb_rating['name']}</span> : null}
-                                {clip ? <div className="embed-responsive embed-responsive-16by9">
-                                    <video className="embed-responsive-item" src={clip['clip']} width="320" height="240" controls allowFullScreen></video>
-                                </div> : null}
+                                {clip ?
+                                    <video className="embed-responsive-item" width="100%" height="350" controls autoPlay muted allowFullScreen>
+                                        <source src={clip['clip']} type="video/mp4" />
+                                    </video> : null}
                                 <span className="pictures">
                                     <ImageGallery
                                         items={images}
@@ -261,10 +273,6 @@ const Details = (props) => {
                                         autoPlay={false}
                                     />
                                 </span>
-                                <span>Where to Buy</span>
-                                <div className="buy">
-                                    <>{getStores(stores)}</>
-                                </div>
                             </div>
                         </div>
 
