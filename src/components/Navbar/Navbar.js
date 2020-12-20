@@ -6,6 +6,7 @@ import Logo from '../../img/logo.png'
 
 import { AiOutlineSearch } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
+import { ImHome } from "react-icons/im";
 
 const Navbar = () => {
 
@@ -24,6 +25,11 @@ const Navbar = () => {
                         <input className="form-control me-2" type="search" placeholder="Search..." aria-label="Search" />
                     </form>
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li className="nav-item">
+                            <Link className="nav-link" aria-current="page" to="/">
+                                <ImHome />
+                            </Link>
+                        </li>
                         <li className="nav-item">
                             <Link className="nav-link" aria-current="page" to="/login">
                                 <BiUserCircle />

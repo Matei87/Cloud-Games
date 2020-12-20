@@ -13,7 +13,11 @@ import ThisWeek from './pages/ThisWeek/ThisWeek';
 import MextWeek from './pages/NextWeek/NextWeek';
 import Details from './pages/Details/Details';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'jquery/dist/jquery.min.js'
+import 'bootstrap/dist/js/bootstrap.min.js'
+
+
 
 const App = () => {
   return (

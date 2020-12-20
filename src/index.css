@@ -47,5 +47,6 @@ button:focus {
 }
 
 *::selection {
+  color: #fff;
   background: var(--red);
 }

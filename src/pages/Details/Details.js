@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import './Details.scss';
 
 import ImageGallery from 'react-image-gallery';
@@ -66,20 +66,17 @@ const Details = (props) => {
         for (let i in tag) {
             tags.push(tag[i]['name']);
         }
-        return <>
-            <span className="badge rounded-pill bg-primary text-dark">
+        return <Fragment key={'tags'}>
+            <span className="badge">
                 {tags.slice(0, 1)}
             </span>
-            <span className="badge rounded-pill bg-secondary">
+            <span className="badge">
                 {tags.slice(1, 2)}
             </span>
-            <span className="badge rounded-pill bg-danger text-dark">
+            <span className="badge">
                 {tags.slice(2, 3)}
             </span>
-            <span className="badge rounded-pill bg-info">
-                {tags.slice(3, 4)}
-            </span>
-        </>;
+        </Fragment>;
     }
 
     const getPublisher = (publisher) => {
@@ -236,6 +233,7 @@ const Details = (props) => {
                 <div className="details-header">
 
                     <div className="details-header-image" style={{ backgroundImage: `url(${background_image})` }}>
+                        <div className="details-header-tags">{getTags(tags)}</div>
                     </div>
 
                 </div>
@@ -263,13 +261,13 @@ const Details = (props) => {
                                     <li className="genres">
                                         <span className="genres-title">Genre:</span>
                                         {genres ? <span>{genres.slice(0, 2).map(genre => {
-                                            return <><span className="genre" key={genre.name}>{genre.name}</span> <span className="line">-</span></>;
+                                            return <Fragment key={genre.name}><span className="genre">{genre.name}</span> <span className="line">-</span></Fragment>;
                                         })} </span> : null}
                                     </li>
                                     <li className="developers">
                                         <span className="developers-title">Developers:</span>
                                         {developers ? <span>{developers.map(developer => {
-                                            return <><span className="developer" key={developer.name}>{(developer.name)}</span> <span className="line">/</span></>;
+                                            return <Fragment key={developer.name}><span className="developer">{(developer.name)}</span> <span className="line">/</span></Fragment>;
                                         })} </span> : null}
                                     </li>
                                     <li className="publishers">
@@ -280,7 +278,7 @@ const Details = (props) => {
                                         <span className="recomended-title">Recommended:</span>
                                         <span>
                                             {esrb_rating ?
-                                                <span className="recommended" key={esrb_rating['name']}>{esrb_rating['name'] === 'Teen' ? '13+ Teen' : esrb_rating['name'] === 'Mature' ? '17+ Mature' : esrb_rating['name'] === 'Adults Only' ? '18+ Adults Only' : null}</span>
+                                                <span className="recommended">{esrb_rating['name'] === 'Teen' ? '13+ Teen' : esrb_rating['name'] === 'Mature' ? '17+ Mature' : esrb_rating['name'] === 'Adults Only' ? '18+ Adults Only' : null}</span>
                                                 : 'Not Rated'}
                                         </span>
                                     </li>
@@ -296,23 +294,19 @@ const Details = (props) => {
                                 <div className="description">
                                     <div className="dot"><h2 className="description-title">Description</h2></div>
                                     {description ? <>{parse(description)}</> : null}
-
                                 </div>
-
-                                <span className="details-header-tags">Tags: {getTags(tags)}</span>
 
                             </div>
 
                             <div className="details-header-right">
 
                                 {clip ?
-                                    <video className="embed-responsive-item" width="100%" height="350" controls autoPlay muted allowFullScreen>
+                                    <video className="embed-responsive-item" width="100%" height="350px" controls autoPlay muted allowFullScreen>
                                         <source src={clip['clip']} type="video/mp4" />
                                     </video> : null}
                                 <span className="pictures">
                                     <ImageGallery
                                         items={images}
-                                        // thumbnailPosition='left'
                                         showThumbnails={false}
                                         showPlayButton={false}
                                         showBullets={true}
@@ -320,17 +314,45 @@ const Details = (props) => {
                                     />
                                 </span>
 
-                                <div className="requirements">
-                                    <div className="dot"><div className="requirements-title">System Requirements</div></div>
-                                    {platforms ? <>{platforms.map(plat => {
-                                        if (plat.platform['name'].includes('PC') && plat.requirements !== null) {
-                                            return <><p><span>{parse(plat.requirements['minimum'])}</span></p>
-                                                <p><span>{parse(plat.requirements['recommended'])}</span></p></>
-                                            //console.log(plat.requirements);
-                                        }
 
-                                    })}</> : null}
-                                </div>
+                                {platforms ? <>{platforms.map(plat => {
+
+                                    return plat.platform['name'].includes('PC') && plat.requirements !== null ? <div className="requirements">
+                                        <div className="dot"><div className="requirements-title">System Requirements</div></div>
+                                        {(plat.requirements['minimum'] && !plat.requirements['recommended']) ? <Fragment key={'requirements'}>
+                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Minimum</a>
+                                            </div>
+                                            <div class="tab-content" id="nav-tabContent">
+                                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                    <>{parse(plat.requirements['minimum'])}</>
+                                                </div>
+                                            </div>
+                                        </Fragment> : (plat.requirements['recommended'] && !plat.requirements['minimum']) ? <Fragment key={'requirements'}>
+                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Recommended</a>
+                                            </div>
+                                            <div class="tab-content" id="nav-tabContent">
+                                                <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                    <>{parse(plat.requirements['recommended'])}</>
+                                                </div>
+                                            </div>
+                                        </Fragment> : <Fragment key={'requirements'}>
+                                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Minimum</a>
+                                                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Recommended</a>
+                                                    </div>
+                                                    <div class="tab-content" id="nav-tabContent">
+                                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                            <>{parse(plat.requirements['minimum'])}</>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                            <>{parse(plat.requirements['recommended'])}</>
+                                                        </div>
+                                                    </div>
+                                                </Fragment>} </div> : null
+                                }
+                                )}</> : null}
 
                             </div>
                         </div>
@@ -340,7 +362,7 @@ const Details = (props) => {
 
                     <div className="details-content">
                         <div id="content" className="similar">
-                            <h1 className="similar-content-title">Similar to {name}:</h1>
+                            <h1 className="similar-content-title">Similar to <span>{name}</span>:</h1>
 
                             <div className="main-wrapper">
 
