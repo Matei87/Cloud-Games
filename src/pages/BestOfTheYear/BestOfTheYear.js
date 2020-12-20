@@ -47,13 +47,8 @@ const BestOfTheYear = () => {
         return newWords.join(' ');
     }
 
-    const linkName = (name) => {
-        return name.replace(':', '').toLowerCase().split(' ').join('-');
-    }
-
-
     return (
-        <div id="content">
+        <div id="content" className="main-page">
             <div className="container">
                 <div className="main-wrapper">
 
@@ -105,7 +100,7 @@ const BestOfTheYear = () => {
                             </div>
                             <div className="footer">
                                 <span className="card-text">{name(data.name)}</span>
-                                {data.ratings ? <>{setRating(data.ratings[0]['title'])}</> : null}
+                                {data.ratings.length > 0 ? <>{setRating(data.ratings[0]['title'])}</> : null}
                             </div>
 
                             <div className="overlay">
@@ -113,7 +108,7 @@ const BestOfTheYear = () => {
                                     <Link
                                         className="overlay-content-details"
                                         to={{
-                                            pathname: `details/${linkName(data.name)}`,
+                                            pathname: `/details/${data.id}`,
                                             state: { id: data.id }
                                         }}
                                     >See More</Link>

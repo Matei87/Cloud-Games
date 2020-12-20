@@ -30,7 +30,7 @@ const App = () => {
           <Route exact path="/last-30-days" component={Last30Days} />
           <Route exact path="/this-week" component={ThisWeek} />
           <Route exact path="/next-week" component={MextWeek} />
-          <Route exact path="/details/:name" component={Details} />
+          <Route exact path="/details/:id" component={Details} />
 
 
         </Switch>

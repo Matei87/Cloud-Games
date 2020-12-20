@@ -5,11 +5,19 @@ import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
 
 import Loader from '../../components/Loader/Loader';
+import { Link } from 'react-router-dom';
+import parse from 'html-react-parser';
+
+
+import Exceptional from '../../img/exceptional.png';
+import Recommended from '../../img/recommended.png';
+import Meh from '../../img/meh.png';
+import Skip from '../../img/skip.png';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { SiNintendoswitch, SiGogDotCom, SiSteam, SiEpicgames } from 'react-icons/si';
 import { GrGooglePlay, GrAppleAppStore } from 'react-icons/gr';
-import { AiFillStar, AiFillWindows, AiFillAndroid, AiFillApple } from 'react-icons/ai';
+import { AiFillStar, AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
 import { MdPhoneAndroid } from 'react-icons/md';
 
 
@@ -18,32 +26,34 @@ const Details = (props) => {
         isLoaded: false,
         details: [],
         pictures: [],
-
+        similar: [],
 
     });
     const { details: { background_image, name, rating, genres, released,
-        tags, developers, publishers, esrb_rating, clip, stores, platforms }, pictures } = data;
+        tags, developers, publishers, esrb_rating, clip, stores, platforms, description }, pictures, similar } = data;
     console.log(data.details);
     //console.log(pictures);
-    const { id } = props.location.state;
+    const { id } = props.match.params;
 
+    //console.log(props);
 
     useEffect(() => {
         const getDetails = async () => {
             try {
                 let api = `https://api.rawg.io/api/games/${id}`;
                 let apiScreens = `https://api.rawg.io/api/games/${id}/screenshots`;
-                let urls = [api, apiScreens];
+                let similarGames = `https://api.rawg.io/api/games/${id}/suggested`;
+                let urls = [api, apiScreens, similarGames];
                 let request = await Promise.all(urls.map(url => fetch(url)));
                 let data = await Promise.all(request.map(req => req.json()));
                 //console.log(data);
-                setData({ details: data[0], pictures: data[1].results, isLoaded: true });
+                setData({ details: data[0], pictures: data[1].results, similar: data[2].results, isLoaded: true });
             } catch (error) {
                 console.log(error);
             }
         }
         getDetails();
-    }, []);
+    }, [id]);
 
 
     const getReleased = (date) => {
@@ -187,11 +197,39 @@ const Details = (props) => {
 
     }
 
+    const setRating = (title) => {
+        //console.log(title[0]);
+
+        switch (title) {
+            case "exceptional":
+                return <span className="rating"> <img src={Exceptional} alt="exceptional" /></span>;
+                break;
+            case "recommended":
+                return <span className="rating"> <img src={Recommended} alt="recommended" /></span>;
+                break;
+            case "meh":
+                return <span className="rating"> <img src={Meh} alt="meh" /></span>;
+                break;
+            case "skip":
+                return <span className="rating"> <img src={Skip} alt="skip" /></span>;
+                break;
+            default:
+                return null;
+        }
+    }
+
+    const setName = (name) => {
+        let pieces = name.toLowerCase().split(' ');
+        let newWords = pieces.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+        return newWords.join(' ');
+    }
+
     let images = [];
     for (let i in pictures) {
-        images.push({ original: pictures[i]['image'], thumbnail: pictures[i]['image'] });
+        images.push({ original: pictures[i]['image'] });
     }
-    console.log(images);
+
+    //console.log(images);
     return (
         <>{
             data.isLoaded === true ? <div id="details">
@@ -202,55 +240,63 @@ const Details = (props) => {
 
                 </div>
 
-                <div className="details-body">
+                <div className="details-wrapper container">
 
-                    <div className="container">
+                    <div className="details-body">
 
                         <div className="details-header-details">
 
                             <div className="details-header-left">
-                                <span className="details-header-name">{name}</span>
+                                <h1 className="details-header-name">{name}</h1>
                                 <p className="details-header-left-details">
                                     <span className="star"><AiFillStar /></span>
                                     <span className="rating">{(rating).toString().slice(0, 3)}/5</span>|
                                     <span className="platforms">{getPlatforms(platforms)}</span>
                                 </p>
 
-                                <ul className="details-header-left-list">
-                                    <li className="details-header-left-list-title">Game Details</li>
-                                    <li className="release_date">
-                                        <span>Release Date:</span>
-                                        <span>{getReleased(released)}</span>
+                                <ul className="game-details">
+                                    <div className="dot"><h2 className="game-details-title">Game Details</h2></div>
+                                    <li className="release-date">
+                                        <span className="release-date-title">Release Date:</span>
+                                        {released ? <span>{getReleased(released)}</span> : null}
                                     </li>
                                     <li className="genres">
-                                        <span>Genre:</span>
-                                        {genres ? <span>{genres.slice(0, 3).map(genre => {
-                                            return <><span className="genre">{genre.name}</span> <span className="dot">-</span></>;
+                                        <span className="genres-title">Genre:</span>
+                                        {genres ? <span>{genres.slice(0, 2).map(genre => {
+                                            return <><span className="genre" key={genre.name}>{genre.name}</span> <span className="line">-</span></>;
                                         })} </span> : null}
                                     </li>
                                     <li className="developers">
-                                        <span>Developers:</span>
+                                        <span className="developers-title">Developers:</span>
                                         {developers ? <span>{developers.map(developer => {
-                                            return <><span className="developer">{(developer.name)}</span> <span className="dot">/</span></>;
+                                            return <><span className="developer" key={developer.name}>{(developer.name)}</span> <span className="line">/</span></>;
                                         })} </span> : null}
                                     </li>
                                     <li className="publishers">
-                                        <span>Publisher:</span>
+                                        <span className="publishers-title">Publisher:</span>
                                         <span>{getPublisher(publishers)}</span>
                                     </li>
                                     <li className="recomended">
-                                        <span>Recommended:</span>
-                                        <span>{esrb_rating ?
-                                            <span className="recommended">{esrb_rating['name'] === 'Mature' ? '17+ Mature' : esrb_rating['name'] === 'Adults Only' ? '18+ Adults Only' : null}</span>
-                                            : 'Not Rated'}</span>
+                                        <span className="recomended-title">Recommended:</span>
+                                        <span>
+                                            {esrb_rating ?
+                                                <span className="recommended" key={esrb_rating['name']}>{esrb_rating['name'] === 'Teen' ? '13+ Teen' : esrb_rating['name'] === 'Mature' ? '17+ Mature' : esrb_rating['name'] === 'Adults Only' ? '18+ Adults Only' : null}</span>
+                                                : 'Not Rated'}
+                                        </span>
                                     </li>
                                 </ul>
 
                                 <div className="badges">
-                                    <span className="badge-title">Where to Buy</span>
+                                    <div className="dot"><h2 className="badges-title">Where to Buy</h2></div>
                                     <div className="buy">
                                         <>{getStores(stores)}</>
                                     </div>
+                                </div>
+
+                                <div className="description">
+                                    <div className="dot"><h2 className="description-title">Description</h2></div>
+                                    {description ? <>{parse(description)}</> : null}
+
                                 </div>
 
                                 <span className="details-header-tags">Tags: {getTags(tags)}</span>
@@ -266,16 +312,113 @@ const Details = (props) => {
                                 <span className="pictures">
                                     <ImageGallery
                                         items={images}
-                                        thumbnailPosition='left'
-                                        showThumbnails={true}
+                                        // thumbnailPosition='left'
+                                        showThumbnails={false}
                                         showPlayButton={false}
                                         showBullets={true}
                                         autoPlay={false}
                                     />
                                 </span>
+
+                                <div className="requirements">
+                                    <div className="dot"><div className="requirements-title">System Requirements</div></div>
+                                    {platforms ? <>{platforms.map(plat => {
+                                        if (plat.platform['name'].includes('PC') && plat.requirements !== null) {
+                                            return <><p><span>{parse(plat.requirements['minimum'])}</span></p>
+                                                <p><span>{parse(plat.requirements['recommended'])}</span></p></>
+                                            //console.log(plat.requirements);
+                                        }
+
+                                    })}</> : null}
+                                </div>
+
                             </div>
                         </div>
 
+                    </div>
+
+
+                    <div className="details-content">
+                        <div id="content" className="similar">
+                            <h1 className="similar-content-title">Similar to {name}:</h1>
+
+                            <div className="main-wrapper">
+
+                                {similar ? similar.map(games => {
+                                    //console.log(games);
+
+                                    return <div className="wrapper" key={games.id}>
+                                        <div className="header">
+                                            <img src={games.background_image} alt="background" />
+                                        </div>
+                                        <div className="body">
+                                            <span className="platforms">
+                                                {games.platforms ? games.platforms.map(plat => {
+
+                                                    let platforms = [];
+                                                    for (let i in plat) {
+                                                        platforms.push(plat.platform.name);
+                                                    }
+
+                                                    switch (platforms[0]) {
+                                                        case "PC":
+                                                            return <AiFillWindows key={'PC'} />;
+                                                            break;
+                                                        case "Xbox One":
+                                                            return <FaXbox key={'Xbox_One'} />;
+                                                            break;
+                                                        case "Linux":
+                                                            return <FaLinux key={'Linux'} />;
+                                                            break;
+                                                        case "iOS":
+                                                            return <MdPhoneAndroid key={'iOS'} />;
+                                                            break;
+                                                        case "PlayStation 4" || "PlayStation 5":
+                                                            return <FaPlaystation key={'PlayStation'} />;
+                                                            break;
+                                                        case "Nintendo Switch":
+                                                            return <SiNintendoswitch key={'Nintendo_Switch'} />;
+                                                            break;
+                                                        case "Android":
+                                                            return <AiFillAndroid key={'Android'} />;
+                                                            break;
+                                                        case "macOS":
+                                                            return <AiFillApple key={'macOS'} />;
+                                                            break;
+                                                        default:
+                                                            return null;
+                                                    }
+
+                                                }) : null}
+                                            </span>
+                                            <>{games.metacritic ?
+                                                <span className={games.metacritic <= 70 ? `metacritic yellow` :
+                                                    games.metacritic >= 71 || games.metacritic <= 100 ? `metacritic green` : null}>{games.metacritic}</span>
+                                                : null}</>
+                                        </div>
+                                        <div className="footer">
+                                            <span className="card-text">{setName(games.name)}</span>
+                                            {games.ratings.length > 0 ? <>{setRating(games.ratings[0].title)}</> : null}
+                                        </div>
+
+                                        <div className="overlay">
+                                            <div className="overlay-content">
+                                                <Link
+                                                    className="overlay-content-details"
+                                                    to={{
+                                                        pathname: `/details/${games.id}`,
+                                                        state: { id: games.id }
+                                                    }}
+                                                >See More</Link>
+                                                <span className="overlay-content-favorite">< AiFillHeart /></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }) : <p>No similar games</p>}
+
+
+                            </div>
+                        </div>
                     </div>
 
                 </div>

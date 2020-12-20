@@ -1,5 +1,5 @@
 #content {
-    margin: 16rem 0;
+    margin: 12rem 0;
 
     .container {
 
@@ -13,7 +13,6 @@
                 border: none;
                 position: relative;
                 height: 37rem; 
-                border-radius: .8rem;
                 overflow: hidden; 
 
                     .header {
@@ -24,7 +23,6 @@
                         img {
                             height: 100%; width: 100%;
                             object-fit: cover;
-                            //border-radius: .8rem .8rem 0 0;
                         }
 
                         &::after {
@@ -59,7 +57,6 @@
                             margin-left: auto;
                             padding: 1px 4px;
                             font-weight: 600; font-size: 1.4rem;
-                            border-radius: 4px;
 
                             &.yellow {
                                 color: #fff;
@@ -77,7 +74,6 @@
                         color: white; background: #000;
                         z-index: 1; width: 100%; height: 5rem;
                         padding: 1.2rem 2rem; 
-                        //border-radius: 0 0 .8rem .8rem;
                         display: flex; justify-content: left; align-items: center;
 
                         span {
@@ -99,7 +95,6 @@
                         position: absolute; left: 0; right: 0; top: -8%;
                         background: rgba(0, 0, 0, .5);
                         width: 100%; height: 0;
-                        //border-radius: .8rem;
                         transition: all .3s linear;
 
                         .overlay-content {
@@ -116,7 +111,6 @@
                                 color: #fff;
                                 border: 2px solid #fff;
                                 padding: 8px 14px;
-                                border-radius: .5rem;
                                 transition: all .2s linear;
 
                                &:hover {
