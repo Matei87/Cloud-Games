@@ -27,11 +27,11 @@
       .bm-menu-wrap {
         position: fixed;
         height: 100%;
-        top: 76px;
+        top: 78px;
 
             /* General sidebar styles */
             .bm-menu {
-                background: #606060;
+                background: #1f2833;
                 padding: 4rem 2.5rem 0;
                 font-size: 1.5rem;
             }
@@ -58,16 +58,27 @@
                 }
 
                 li {
+                    display: flex; align-items: center;
+                    margin-bottom: .5rem;
 
-                    svg {
-                        fill: #fff;
-                        font-size: 2rem;
-                        font-weight: 500;
+                    span {
+                        padding: .5rem;
+                        background: rgba(white, .1);
+                        border-radius: .25rem;
+                        margin-right: .5rem;
 
-                        path {
-                            stroke: #fff;
+                        svg {
+                            fill: #fff;
+                            font-size: 2rem;
+                            font-weight: 500;
+                            
+    
+                            path {
+                                stroke: #fff;
+                            }
                         }
                     }
+                    
 
                     a {
                         font-size: 1.8rem;

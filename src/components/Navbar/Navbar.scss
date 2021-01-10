@@ -36,14 +36,21 @@
                 margin: 0; 
                 position: relative;
                 
-                svg {
+                .btn {
                     position: absolute; left: .5rem;
-                    font-size: 2rem;
+                    font-size: 2rem; color: #d4af37;
+                    transition: all .4s linear;
+                    display: flex; align-self: center;
+                    
+                    &:hover{
+                        color: var(--gold);
+                    }
                 }
+                
 
                 input {
                     font-size: 1.6rem;
-                    padding: .8rem 6rem .8rem 3rem;
+                    padding: .8rem 6rem .8rem 4rem;
                     border-radius: 2rem;
                     height: 4.5rem; width: 35rem;
 
@@ -64,9 +71,9 @@
                         svg {
                             font-size: 3rem;
                             color: var(--gold);
+                            transition: all .4s linear;
 
                             &:hover{
-                                transition: all .4s linear;
                                 color: #d4af37;
                             }
                         }

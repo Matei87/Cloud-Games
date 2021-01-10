@@ -50,6 +50,31 @@
                                     margin-left: 0;
                                 }
                             }
+                            
+                            .wii {
+                                width: 25px;
+                                height: 25px;
+                            }
+
+                            .wiiu {
+                                width: 32px;
+                                height: 32px;
+
+                                path {
+                                    width: 32px;
+                                    height: 32px;
+                                }
+                            }
+
+                            .psvita {
+                                width: 35px;
+                                height: 35px;
+                            }
+
+                            .web {
+                                width: 1.75rem;
+                                height: 1.75rem;
+                            }
                         }
                         
 

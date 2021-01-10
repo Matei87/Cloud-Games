@@ -3,6 +3,7 @@ import './Details.scss';
 
 import ImageGallery from 'react-image-gallery';
 import "react-image-gallery/styles/css/image-gallery.css";
+import Web from '../../img/webu.png';
 
 import Loader from '../../components/Loader/Loader';
 import { Link } from 'react-router-dom';
@@ -15,11 +16,14 @@ import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
-import { SiNintendoswitch, SiGogDotCom, SiSteam, SiEpicgames } from 'react-icons/si';
+import {
+    SiNintendoswitch, SiGogDotCom, SiSteam, SiEpicgames, SiWii,
+    SiWiiu, SiNintendo3Ds, SiPlaystationvita, SiItchDotIo, SiSega
+} from 'react-icons/si';
 import { GrGooglePlay, GrAppleAppStore } from 'react-icons/gr';
 import { AiFillStar, AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
 import { MdPhoneAndroid } from 'react-icons/md';
-
+import { GiGamepad } from 'react-icons/gi';
 
 const Details = (props) => {
     const [data, setData] = useState({
@@ -29,13 +33,13 @@ const Details = (props) => {
         similar: [],
 
     });
-    const { details: { background_image, name, rating, genres, released,
+    const { details: { background_image, name, rating, genres, released, website,
         tags, developers, publishers, esrb_rating, clip, stores, platforms, description }, pictures, similar } = data;
     console.log(data.details);
-    //console.log(pictures);
+    console.log(data.details.platforms);
     const { id } = props.match.params;
 
-    //console.log(props);
+    console.log(similar);
 
     useEffect(() => {
         const getDetails = async () => {
@@ -147,6 +151,11 @@ const Details = (props) => {
                         <span className="badge">App Store <GrAppleAppStore /></span>
                     </a>;
                     break;
+                case "itch.io":
+                    return <a href={store[1]} className="store" target="_blank" rel="noreferrer" key={'itch_io'}>
+                        <span className="badge">itch.io <SiItchDotIo /></span>
+                    </a>;
+                    break;
 
                 default:
                     return null;
@@ -161,37 +170,97 @@ const Details = (props) => {
             platforms.push(platform[i].platform['name']);
             //console.log(platform[i].platform['name']);
         }
-        return platforms.map(platform => {
+        //console.log(platforms);
+        //pc, playstation, xbox, android, mac, nintendo
+        let hashtable = {};
+        for (let i = 0; i < platforms.length; i++) {
+            if (platforms[i] === 'PC') {
+                hashtable['pc'] = ["PC"];
+            } else if (platforms[i] === 'Xbox Series S/X' || platforms[i] === 'Xbox One' || platforms[i] === 'Xbox 360') {
+                hashtable['xbox'] = ["xbox", 'Xbox Series S/X', 'Xbox 360'];
+            } else if (platforms[i] === 'PlayStation' || platforms[i] === 'PlayStation 2' || platforms[i] === 'PlayStation 3' || platforms[i] === 'PlayStation 4' || platforms[i] === 'PlayStation 5') {
+                hashtable['playstation'] = ['PlayStation 3', 'PlayStation 4', 'PlayStation 5'];
+            } else if (platforms[i] === 'Nintendo Switch') {
+                hashtable['nintendo_switch'] = ['Nintendo Switch'];
+            } else if (platforms[i] === 'Wii') {
+                hashtable['wii'] = ['Wii'];
+            } else if (platforms[i] === 'Wii U') {
+                hashtable['wiiu'] = ['Wii U'];
+            } else if (platforms[i] === 'Android') {
+                hashtable['android'] = ['Android'];
+            } else if (platforms[i] === 'macOS' || platforms[i] === 'Classic Macintosh') {
+                hashtable['macos'] = ['macOS', 'Classic Macintosh'];
+            } else if (platforms[i] === 'Linux') {
+                hashtable['linux'] = ['Linux'];
+            } else if (platforms[i] === 'iOS') {
+                hashtable['ios'] = ['iOS'];
+            } else if (platforms[i] === 'Nintendo DS' || platforms[i] === 'Nintendo 3DS' || platforms[i] === 'Game Boy Advance' || platforms[i] === 'Game Boy' || platforms[i] === 'Game Boy Color') {
+                hashtable['nintendo3ds'] = ['Nintendo DS', 'Nintendo 3DS', 'Game Boy Advance', 'Game Boy', 'Game Boy Color'];
+            } else if (platforms[i] === 'PS Vita') {
+                hashtable['psvita'] = ['PS Vita'];
+            } else if (platforms[i] === 'Web') {
+                hashtable['web'] = ['Web'];
+            } else if (platforms[i] === 'Dreamcast' || platforms[i] === 'Genesis' || platforms[i] === 'SEGA 32X') {
+                hashtable['dreamcast'] = ['Dreamcast', 'Genesis', 'SEGA 32X'];
+            } else if (platforms[i] === 'GameCube' || platforms[i] === 'SNES' || platforms[i] === 'Nintendo 64') {
+                hashtable['gameCube'] = ['GameCube', 'SNES', 'Nintendo 64'];
+            }
+        }
+        //console.log(Object.keys(hashtable));
+
+        return Object.keys(hashtable).map(platform => {
+            //console.log(platform);
+
             switch (platform) {
-                case "PC":
+                case "pc":
                     return <AiFillWindows key={'PC'} />;
                     break;
-                case "Xbox One" || "Xbox Series S/X":
+                case "xbox":
                     return <FaXbox key={'Xbox_One'} />;
                     break;
-                case "Linux":
+                case "linux":
                     return <FaLinux key={'Linux'} />;
                     break;
-                case "iOS":
+                case "ios":
                     return <MdPhoneAndroid key={'iOS'} />;
                     break;
-                case "PlayStation 4" || "PlayStation 5":
+                case 'playstation':
                     return <FaPlaystation key={'PlayStation'} />;
                     break;
-                case "Nintendo Switch":
+                case "nintendo_switch":
                     return <SiNintendoswitch key={'Nintendo_Switch'} />;
                     break;
-                case "Android":
+                case "wii":
+                    return <SiWii key={'Wii'} className="wii" />;
+                    break;
+                case "android":
                     return <AiFillAndroid key={'Android'} />;
                     break;
-                case "macOS":
+                case "macos":
                     return <AiFillApple key={'macOS'} />;
+                    break;
+                case "wiiu":
+                    return <SiWiiu key={'wiiu'} className="wiiu" />;
+                    break;
+                case "nintendo3ds":
+                    return <SiNintendo3Ds key={'nintendo3ds'} />;
+                    break;
+                case "psvita":
+                    return <SiPlaystationvita key={'psvita'} className="psvita" />;
+                    break;
+                case "web":
+                    return <img src={Web} alt="web" key={'web'} className="web" />
+                    break;
+                case "dreamcast":
+                    return <SiSega key={'dreamcast'} />
+                    break;
+                case "gameCube":
+                    return <GiGamepad key={'gameCube'} />
                     break;
                 default:
                     return null;
             }
         });
-
     }
 
     const setRating = (title) => {
@@ -256,40 +325,52 @@ const Details = (props) => {
                                     <div className="dot"><h2 className="game-details-title">Game Details</h2></div>
                                     <li className="release-date">
                                         <span className="release-date-title">Release Date:</span>
-                                        {released ? <span>{getReleased(released)}</span> : null}
+                                        {released ? <span>{getReleased(released)}</span> : <span>TBA</span>}
                                     </li>
+
                                     <li className="genres">
                                         <span className="genres-title">Genre:</span>
-                                        {genres ? <span>{genres.slice(0, 2).map(genre => {
+                                        {genres.length >= 1 ? <span>{genres.slice(0, 2).map(genre => {
                                             return <Fragment key={genre.name}><span className="genre">{genre.name}</span> <span className="line">-</span></Fragment>;
-                                        })} </span> : null}
+                                        })} </span> : <span>N/A</span>}
                                     </li>
-                                    <li className="developers">
+
+                                    {developers.length >= 1 ? <li className="developers">
                                         <span className="developers-title">Developers:</span>
-                                        {developers ? <span>{developers.map(developer => {
+                                        <span>{developers.map(developer => {
                                             return <Fragment key={developer.name}><span className="developer">{(developer.name)}</span> <span className="line">/</span></Fragment>;
-                                        })} </span> : null}
-                                    </li>
-                                    <li className="publishers">
+                                        })} </span>
+                                    </li> : null}
+
+                                    {publishers.length >= 1 ? <li className="publishers">
                                         <span className="publishers-title">Publisher:</span>
                                         <span>{getPublisher(publishers)}</span>
-                                    </li>
-                                    <li className="recomended">
+                                    </li> : null}
+
+                                    <li className="recomendeds">
                                         <span className="recomended-title">Recommended:</span>
                                         <span>
                                             {esrb_rating ?
-                                                <span className="recommended">{esrb_rating['name'] === 'Teen' ? '13+ Teen' : esrb_rating['name'] === 'Mature' ? '17+ Mature' : esrb_rating['name'] === 'Adults Only' ? '18+ Adults Only' : null}</span>
+                                                <span className="recommended">{esrb_rating['name'] === 'Teen' ? '13+ Teen' : esrb_rating['name'] === 'Mature' ? '17+ Mature' : esrb_rating['name'] === 'Adults Only' ? '18+ Adults Only' : esrb_rating['name'] === 'Rating Pending' ? 'Rating Pending' : null}</span>
                                                 : 'Not Rated'}
                                         </span>
                                     </li>
+
+                                    {website !== '' ? <li className="websites">
+                                        <span className="website-title">Website:</span>
+                                        <span>
+                                            <a className="website" href={website} target="_blank">{website}</a>
+                                        </span>
+                                    </li> : null}
+
                                 </ul>
 
-                                <div className="badges">
+                                {stores.length >= 1 ? <div className="badges">
                                     <div className="dot"><h2 className="badges-title">Where to Buy</h2></div>
                                     <div className="buy">
                                         <>{getStores(stores)}</>
                                     </div>
-                                </div>
+                                </div> : null}
 
                                 <div className="description">
                                     <div className="dot"><h2 className="description-title">Description</h2></div>
@@ -317,36 +398,36 @@ const Details = (props) => {
 
                                 {platforms ? <>{platforms.map(plat => {
 
-                                    return plat.platform['name'].includes('PC') && plat.requirements !== null ? <div className="requirements">
+                                    return plat.platform['name'].includes('PC') && plat.requirements !== null ? <div className="requirements" key="requirements">
                                         <div className="dot"><div className="requirements-title">System Requirements</div></div>
-                                        {(plat.requirements['minimum'] && !plat.requirements['recommended']) ? <Fragment key={'requirements'}>
-                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Minimum</a>
+                                        {(plat.requirements['minimum'] && !plat.requirements['recommended']) ? <Fragment>
+                                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <a className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Minimum</a>
                                             </div>
-                                            <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                            <div className="tab-content" id="nav-tabContent">
+                                                <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                                     <>{parse(plat.requirements['minimum'])}</>
                                                 </div>
                                             </div>
-                                        </Fragment> : (plat.requirements['recommended'] && !plat.requirements['minimum']) ? <Fragment key={'requirements'}>
-                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Recommended</a>
+                                        </Fragment> : (plat.requirements['recommended'] && !plat.requirements['minimum']) ? <Fragment>
+                                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <a className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Recommended</a>
                                             </div>
-                                            <div class="tab-content" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                            <div className="tab-content" id="nav-tabContent">
+                                                <div className="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                                     <>{parse(plat.requirements['recommended'])}</>
                                                 </div>
                                             </div>
-                                        </Fragment> : <Fragment key={'requirements'}>
-                                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Minimum</a>
-                                                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Recommended</a>
+                                        </Fragment> : <Fragment>
+                                                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                                                        <a className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Minimum</a>
+                                                        <a className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Recommended</a>
                                                     </div>
-                                                    <div class="tab-content" id="nav-tabContent">
-                                                        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                    <div className="tab-content" id="nav-tabContent">
+                                                        <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
                                                             <>{parse(plat.requirements['minimum'])}</>
                                                         </div>
-                                                        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                        <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
                                                             <>{parse(plat.requirements['recommended'])}</>
                                                         </div>
                                                     </div>
@@ -360,13 +441,13 @@ const Details = (props) => {
                     </div>
 
 
-                    <div className="details-content">
+                    {similar.length >= 1 ? <div className="details-content">
                         <div id="content" className="similar">
                             <h1 className="similar-content-title">Similar to <span>{name}</span>:</h1>
 
                             <div className="main-wrapper">
 
-                                {similar ? similar.map(games => {
+                                {similar.map(games => {
                                     //console.log(games);
 
                                     return <div className="wrapper" key={games.id}>
@@ -375,7 +456,7 @@ const Details = (props) => {
                                         </div>
                                         <div className="body">
                                             <span className="platforms">
-                                                {games.platforms ? games.platforms.map(plat => {
+                                                {/* {games.platforms ? games.platforms.map(plat => {
 
                                                     let platforms = [];
                                                     for (let i in plat) {
@@ -387,6 +468,7 @@ const Details = (props) => {
                                                             return <AiFillWindows key={'PC'} />;
                                                             break;
                                                         case "Xbox One":
+                                                        case "Xbox Series S/X":
                                                             return <FaXbox key={'Xbox_One'} />;
                                                             break;
                                                         case "Linux":
@@ -395,11 +477,16 @@ const Details = (props) => {
                                                         case "iOS":
                                                             return <MdPhoneAndroid key={'iOS'} />;
                                                             break;
-                                                        case "PlayStation 4" || "PlayStation 5":
+                                                        case "PlayStation 3":
+                                                        case "PlayStation 4":
+                                                        case "PlayStation 5":
                                                             return <FaPlaystation key={'PlayStation'} />;
                                                             break;
                                                         case "Nintendo Switch":
                                                             return <SiNintendoswitch key={'Nintendo_Switch'} />;
+                                                            break;
+                                                        case "Wii":
+                                                            return <SiWii key={'Wii'} />;
                                                             break;
                                                         case "Android":
                                                             return <AiFillAndroid key={'Android'} />;
@@ -411,7 +498,9 @@ const Details = (props) => {
                                                             return null;
                                                     }
 
-                                                }) : null}
+                                                }) : null} */}
+
+                                                {games.platforms ? getPlatforms(games.platforms) : null}
                                             </span>
                                             <>{games.metacritic ?
                                                 <span className={games.metacritic <= 70 ? `metacritic yellow` :
@@ -436,12 +525,12 @@ const Details = (props) => {
                                             </div>
                                         </div>
                                     </div>
-                                }) : <p>No similar games</p>}
+                                })}
 
 
                             </div>
                         </div>
-                    </div>
+                    </div> : null}
 
                 </div>
 
