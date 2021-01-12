@@ -20,7 +20,7 @@
             // background-position: top;
 
             .details-header-tags { z-index: 1;
-                position: relative; top: 15%; left: 10%;
+                position: relative; top: 15%; left: 15.5%;
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
                 grid-gap: 1rem;
@@ -63,7 +63,7 @@
         
                     .details-header-left {
                         display: flex; flex-direction: column;
-                        padding: 0 1.3rem;
+                        //padding: 0 1.3rem;
                         text-align: left;
                         font-weight: 400;
     
@@ -614,6 +614,7 @@
                                 span {
                                     font-weight: 700; font-size: 1.8rem;
                                     display: flex; justify-content: center; align-content: center;
+                                    text-align: left;
                                 }
         
                                 .rating {

@@ -122,7 +122,7 @@ const getPlatforms = (platform) => {
                 return <SiNintendo3Ds key={'nintendo3ds'} />;
                 break;
             case "psvita":
-                return <SiPlaystationvita key={'psvita'} />;
+                return <SiPlaystationvita key={'psvita'} className="psvita" />;
                 break;
             case "web":
                 return <img src={Web} alt="web" key={'web'} className="web" />

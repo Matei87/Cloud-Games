@@ -20,7 +20,7 @@ import Skip from '../../img/skip.png';
 
 const Search = () => {
     const { searchResults, isLoaded } = useContext(GamesContext);
-    console.log(searchResults, isLoaded);
+    console.log('searchResults', searchResults, isLoaded);
 
     const setRating = (title) => {
         switch (title) {
@@ -39,12 +39,6 @@ const Search = () => {
             default:
                 return null;
         }
-    }
-
-    const name = (name) => {
-        let pieces = name.toLowerCase().split(' ');
-        let newWords = pieces.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-        return newWords.join(' ');
     }
 
     const getPlatforms = (platform) => {
@@ -148,7 +142,7 @@ const Search = () => {
             <div className="container">
                 <div className="main-wrapper">
 
-                    {searchResults && isLoaded === true ? searchResults.map(data => {
+                    {searchResults ? searchResults.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -161,7 +155,7 @@ const Search = () => {
                                     : null}</>
                             </div>
                             <div className="footer">
-                                <span className="card-text">{name(data.name)}</span>
+                                <span className="card-text">{data.name}</span>
                                 {data.ratings.length > 0 ? <>{setRating(data.ratings[0]['title'])}</> : null}
                             </div>
 

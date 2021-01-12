@@ -18,9 +18,9 @@ import Skip from '../../img/skip.png';
 
 
 
-const AllTimePopular = () => {
-    const { allTimePopular, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(allTimePopular, isLoaded);
+const PlatformXboxOne = () => {
+    const { gamesXboxOne, isLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(gamesXboxOne, isLoaded);
 
 
     const setRating = (title) => {
@@ -148,10 +148,23 @@ const AllTimePopular = () => {
 
     return (
         <div id="content" className="main-page">
-            <div className="container">
+
+            {isLoaded === true ? <div className="container">
+
+                <div className="gamesDetails">
+                    <p>Games for Xbox One</p>
+                    <h1 className="gamesDetails">
+                        Xbox One is a home video game console released by Microsoft in 2013. Unlike its main competitor — PlayStation 4, the accent in the development was made in multitasking and using a console as a home media player to watch TV, listen to music and play the games.
+                        There is three hardware option available to gamers: original console, One S version (with a smaller body, no external power supply, and native HDR/4k support) and One X (pro-gamer-oriented system with updated hardware and 4k rendering in real time).
+                        While PS4 is known for exclusive-orientation, Xbox One's games are mostly multi-platform titles. This supports Microsoft's initial idea to prevent selling used games between the players.
+                        However, given the competition from the Sony side, the corporation quickly gave up.
+                        Among the notable exclusive games, there are Sunset Overdrive, Halo 5: Guardians and Forza Motorsport 5.
+                    </h1>
+                </div>
+
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? allTimePopular.map(data => {
+                    {gamesXboxOne.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -181,14 +194,14 @@ const AllTimePopular = () => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    })}
 
                 </div>
 
-            </div>
+            </div> : <Loader />}
 
         </div>
     )
 }
 
-export default AllTimePopular;
+export default PlatformXboxOne;

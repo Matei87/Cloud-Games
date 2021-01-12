@@ -18,9 +18,9 @@ import Skip from '../../img/skip.png';
 
 
 
-const AllTimePopular = () => {
-    const { allTimePopular, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(allTimePopular, isLoaded);
+const PlatformIos = () => {
+    const { gamesIos, isLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(gamesIos, isLoaded);
 
 
     const setRating = (title) => {
@@ -148,10 +148,25 @@ const AllTimePopular = () => {
 
     return (
         <div id="content" className="main-page">
-            <div className="container">
+
+            {isLoaded === true ? <div className="container">
+
+                <div className="gamesDetails">
+                    <p>Games for iOS</p>
+                    <h1 className="gamesDetails">
+                        iOS is an operating system initially developed by Apple and named iPhone OS by the title of the only phone developed by a corporation.
+                        While it was intended for mobile phones and media players at first, it has grown to tablets and TV-console.
+                        The OS is considered the second most famous system after Android. iOS is widely known for its closed source code and high data encryption making it nearly impossible to boot the system on the device other than Apple's.
+                        The system features a lot of apps unique to the Apple users including Siri — a voice assistant which can access apps as well as Game Center — a various apps manager allowing gamers to share their achievements while playing with friends.
+                        App Store is considered to be the most profound mobile application platform with strict selection and moderating policies.
+                        The most popular iOS hack is called Jailbreak and allows the user to overclock the CPU and access the hidden homebrew apps within the system.
+                    </h1>
+                </div>
+
+
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? allTimePopular.map(data => {
+                    {gamesIos.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -181,14 +196,14 @@ const AllTimePopular = () => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    })}
 
                 </div>
 
-            </div>
+            </div> : <Loader />}
 
         </div>
     )
 }
 
-export default AllTimePopular;
+export default PlatformIos;

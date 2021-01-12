@@ -18,9 +18,9 @@ import Skip from '../../img/skip.png';
 
 
 
-const AllTimePopular = () => {
-    const { allTimePopular, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(allTimePopular, isLoaded);
+const PlatformPlaystation4 = () => {
+    const { gamesPlaystation4, isLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(gamesPlaystation4, isLoaded);
 
 
     const setRating = (title) => {
@@ -145,13 +145,27 @@ const AllTimePopular = () => {
         gamesFetch();
     }, []);
 
-
     return (
         <div id="content" className="main-page">
-            <div className="container">
+
+            {isLoaded === true ? <div className="container">
+
+                <div className="gamesDetails">
+                    <p>Games for PlayStation 4</p>
+                    <h1 className="gamesDetails">
+                        PlayStation 4 is a home video game console launched in 2013 by Sony.
+                        There are currently three versions of the hardware variations: original console (also called "fat");
+                        a slim version with optical audio output removed, weight and size reduced as well as USB interfaces differently placed; and Pro version with 4k and HDR support added and PS VR functions improved.
+                        PS4 supports VR with the special helmet called PS VR. The starting game lineup of the system is considered to be a one of the most successful in history.
+                        The console maintains the status of an exclusive-oriented platform with many remasters and Playstation-only games.
+                        Together with the start of the system, there was a multiplayer requirement introduced — now everyone seeking to play via PlayStation Network must have PS Plus active.
+                        It is a paid subscription granting the player 5 games per month for all three platforms.
+                    </h1>
+                </div>
+
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? allTimePopular.map(data => {
+                    {gamesPlaystation4.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -181,14 +195,14 @@ const AllTimePopular = () => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    })}
 
                 </div>
 
-            </div>
+            </div> : <Loader />}
 
         </div>
     )
 }
 
-export default AllTimePopular;
+export default PlatformPlaystation4;

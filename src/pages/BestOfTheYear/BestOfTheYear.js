@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import './BestOfTheYear.scss';
 
 import Web from '../../img/web.svg';
@@ -19,8 +19,8 @@ import Skip from '../../img/skip.png';
 
 
 const BestOfTheYear = () => {
-    const { bestOfTheYear, isLoaded } = useContext(GamesContext);
-    //console.log(bestOfTheYear, isLoaded);
+    const { bestOfTheYear, isLoaded, gamesFetch } = useContext(GamesContext);
+    //console.log('bestOfTheYear', bestOfTheYear, isLoaded);
 
     const setRating = (title) => {
         switch (title) {
@@ -41,11 +41,11 @@ const BestOfTheYear = () => {
         }
     }
 
-    const name = (name) => {
-        let pieces = name.toLowerCase().split(' ');
-        let newWords = pieces.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-        return newWords.join(' ');
-    }
+    // const name = (name) => {
+    //     let pieces = name.toLowerCase().split(' ');
+    //     let newWords = pieces.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    //     return newWords.join(' ');
+    // }
 
     const getPlatforms = (platform) => {
         let platforms = [];
@@ -129,7 +129,7 @@ const BestOfTheYear = () => {
                     return <SiNintendo3Ds key={'nintendo3ds'} />;
                     break;
                 case "psvita":
-                    return <SiPlaystationvita key={'psvita'} />;
+                    return <SiPlaystationvita key={'psvita'} className="psvita" />;
                     break;
                 case "web":
                     return <img src={Web} alt="web" key={'web'} className="web" />
@@ -145,6 +145,10 @@ const BestOfTheYear = () => {
             }
         });
     }
+
+    useEffect(() => {
+        gamesFetch();
+    }, []);
 
     return (
         <div id="content" className="main-page">
@@ -164,7 +168,7 @@ const BestOfTheYear = () => {
                                     : null}</>
                             </div>
                             <div className="footer">
-                                <span className="card-text">{name(data.name)}</span>
+                                <span className="card-text">{data.name}</span>
                                 {data.ratings.length > 0 ? <>{setRating(data.ratings[0]['title'])}</> : null}
                             </div>
 

@@ -1,12 +1,31 @@
 #content {
-    margin: 12rem 0;
+    margin: 12rem 0 3rem;
 
     .container {
+            display: block;
+            .gamesDetails {
+                
+                text-align: left;
+                color: #373a47;
+                margin-bottom: 5rem;
+
+                p {
+                    font-size: 4rem;
+                    margin-bottom: 0;
+                    font-weight: 600;
+                }
+
+                h1 {
+                    font-size: 1.75rem;
+                    font-weight: 500;
+                    margin-bottom: 0;
+                }
+            }
 
         .main-wrapper {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            // grid-template-rows: repeat(3, 1fr);
+            //grid-template-rows: repeat(2, 1fr);
             grid-gap: 2rem;
 
             .wrapper {
@@ -104,6 +123,7 @@
                         span {
                             font-weight: 700; font-size: 1.8rem;
                             display: flex; justify-content: center; align-content: center;
+                            text-align: left;
                         }
 
                         .rating {

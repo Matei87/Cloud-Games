@@ -30,20 +30,20 @@ const Navbar = () => {
 
     return (
         <nav className="navbar navbar-expand-lg fixed-top">
-            <div className="container-fluid">
+            <div className="container">
                 <Link className="navbar-brand" to="/">
                     <img src={Logo} alt="logo" />
                 </Link>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                {/* <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
-                </button>
+                </button> */}
                 <div className="collapse navbar-collapse" id="navbarContent">
                     <form className="form-group" onSubmit={onSubmit}>
                         <button className="btn" type="submit">
                             <AiOutlineSearch />
                         </button>
                         <input
-                            className="form-control me-2"
+                            className="form-control"
                             type="search" name="name"
                             placeholder="Search..."
                             value={data}
@@ -52,19 +52,21 @@ const Navbar = () => {
                         />
 
                     </form>
-                    <ul className="navbar-nav mb-2 mb-lg-0">
-                        <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to="/">
-                                <ImHome />
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" aria-current="page" to="/login">
-                                <BiUserCircle />
-                            </Link>
-                        </li>
-                    </ul>
+
                 </div>
+
+                <ul className="navbar-nav mb-2 mb-lg-0">
+                    <li className="nav-item">
+                        <Link className="nav-link" aria-current="page" to="/">
+                            <ImHome />
+                        </Link>
+                    </li>
+                    <li className="nav-item">
+                        <Link className="nav-link" aria-current="page" to="/login">
+                            <BiUserCircle />
+                        </Link>
+                    </li>
+                </ul>
             </div>
         </nav>
     )

@@ -18,9 +18,9 @@ import Skip from '../../img/skip.png';
 
 
 
-const AllTimePopular = () => {
-    const { allTimePopular, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(allTimePopular, isLoaded);
+const PlatformAndroid = () => {
+    const { gamesAndroid, isLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(gamesAndroid, isLoaded);
 
 
     const setRating = (title) => {
@@ -148,10 +148,24 @@ const AllTimePopular = () => {
 
     return (
         <div id="content" className="main-page">
-            <div className="container">
+
+            {isLoaded === true ? <div className="container">
+
+                <div className="gamesDetails">
+                    <p>Games for Android</p>
+                    <h1 className="gamesDetails">
+                        Android is a mobile operating system based on Linux kernel.
+                        The OS uses open-source code so that any developer can modify it.
+                        There is a considerable amount of Android devices from various mobile companies. Android application marketplace — Play Market is the most substantial accumulation of mobile games for one platform with iOS being the second largest one.
+                        Partly, such title comes from a little moderation required for an app to be published in the store, so there naturally are many scam apps and viruses there not to mention that any Android app can be pirated relatively easy.
+                        The separate bunch of Android devices is gaming consoles on the OS. It is the usual mobile phones but with higher performance values and built-in gamepads for more convenient use.
+                        The Google Play Games service was introduced featuring achievements, comparing scores between friends and listing various game tops.
+                    </h1>
+                </div>
+
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? allTimePopular.map(data => {
+                    {gamesAndroid.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -181,14 +195,14 @@ const AllTimePopular = () => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    })}
 
                 </div>
 
-            </div>
+            </div> : <Loader />}
 
         </div>
     )
 }
 
-export default AllTimePopular;
+export default PlatformAndroid;

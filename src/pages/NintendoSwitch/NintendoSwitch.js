@@ -18,9 +18,9 @@ import Skip from '../../img/skip.png';
 
 
 
-const AllTimePopular = () => {
-    const { allTimePopular, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(allTimePopular, isLoaded);
+const PlatformNintendoSwitch = () => {
+    const { gamesNintendoSwitch, isLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(gamesNintendoSwitch, isLoaded);
 
 
     const setRating = (title) => {
@@ -148,10 +148,26 @@ const AllTimePopular = () => {
 
     return (
         <div id="content" className="main-page">
-            <div className="container">
+
+            {isLoaded === true ? <div className="container">
+
+                <div className="gamesDetails">
+                    <p>Games for Nintendo Switch</p>
+                    <h1 className="gamesDetails">
+                        Nintendo Switch is a hybrid video game console made by Nintendo. The system represents a tablet-like device with a touchscreen with detachable controllers on the sides.
+                        The system can be inserted into a docking station connected to the TV and serve as a home console.
+                        This allows the games on the system to be played both on a big screen or in the handheld with no need to reset the system to change the modes.
+                        The central controller for the Switch is a pair of Joy-Cons – small controllers both of which feature four face buttons, an analog stick, two side buttons, and high-definition vibration.
+                        The controllers can be used separately by different players, together using a grip accessory or attached to the system in handheld mode.
+                        Unlike many previous Nintendo consoles, as for 2019, the system has strong support from third-party developers, especially from the indie scene.
+                        The Switch introduced Nintendo Switch Online, a subscription-based service that resembles Xbox Live Gold and PlayStation Plus.
+                        It allows players to play online multiplayer, offers a selection of classic Nintendo games and lets players use cloud saves.
+                    </h1>
+                </div>
+
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? allTimePopular.map(data => {
+                    {gamesNintendoSwitch.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -181,14 +197,14 @@ const AllTimePopular = () => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    })}
 
                 </div>
 
-            </div>
+            </div> : <Loader />}
 
         </div>
     )
 }
 
-export default AllTimePopular;
+export default PlatformNintendoSwitch;
