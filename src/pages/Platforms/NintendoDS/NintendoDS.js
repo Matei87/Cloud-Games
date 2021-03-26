@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import Web from '../../img/web.svg';
-import GamesContext from '../../context/GamesContext';
-import Loader from '../../components/Loader/Loader';
+import Web from '../../../img/web.svg';
+import Loader from '../../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
@@ -11,16 +10,17 @@ import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSe
 import { MdPhoneAndroid } from 'react-icons/md';
 import { GiGamepad } from 'react-icons/gi';
 
-import Exceptional from '../../img/exceptional.png';
-import Recommended from '../../img/recommended.png';
-import Meh from '../../img/meh.png';
-import Skip from '../../img/skip.png';
+import Exceptional from '../../../img/exceptional.png';
+import Recommended from '../../../img/recommended.png';
+import Meh from '../../../img/meh.png';
+import Skip from '../../../img/skip.png';
+
+import { nintendoDSAction } from '../../../redux/actions/actions';
+import { connect } from 'react-redux';
 
 
-
-const PlatformAndroid = () => {
-    const { gamesAndroid, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(gamesAndroid, isLoaded);
+const PlatformNintendoDS = ({ gamesNintendoDS, isNintendoDSLoaded, getData }) => {
+    console.log(gamesNintendoDS, isNintendoDSLoaded, getData);
 
 
     const setRating = (title) => {
@@ -142,30 +142,30 @@ const PlatformAndroid = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
+        getData();
     }, []);
 
 
     return (
         <div id="content" className="main-page">
 
-            {isLoaded === true ? <div className="container">
+            {isNintendoDSLoaded === true ? <div className="container">
 
                 <div className="gamesDetails">
-                    <p>Games for Android</p>
+                    <p>Games for Nintendo DS</p>
                     <h1 className="gamesDetails">
-                        Android is a mobile operating system based on Linux kernel.
-                        The OS uses open-source code so that any developer can modify it.
-                        There is a considerable amount of Android devices from various mobile companies. Android application marketplace — Play Market is the most substantial accumulation of mobile games for one platform with iOS being the second largest one.
-                        Partly, such title comes from a little moderation required for an app to be published in the store, so there naturally are many scam apps and viruses there not to mention that any Android app can be pirated relatively easy.
-                        The separate bunch of Android devices is gaming consoles on the OS. It is the usual mobile phones but with higher performance values and built-in gamepads for more convenient use.
-                        The Google Play Games service was introduced featuring achievements, comparing scores between friends and listing various game tops.
+                        Nintendo DS is Nintendo’s fourth major portable game console. Released as a successor to the company’s Game Boy series of portable game consoles, DS used a clamshell design, similar to the Game Boy Advance SP.
+                        The main feature of the console was its dual-screen display with the bottom screen being touch-sensitive.
+                        The console included a stylus for more precise touchscreen input and used the wireless connection for local and online multiplayer in specific titles.
+                        The Nintendo DS was a massive success for the company and as for 2018 is the second best-selling game console of all time Three Nintendo DS titles – New Super Mario Bros., Nintendogs and Mario Kart DS sold more than 20 million copies.
+                        During its lifespan, it had several redesigns: more compact version and ergonomic DS Lite, DSi that featured preinstalled browser, camera, and online game store, DSi XL, the version of DSi with bigger screens.
+                        The original DS and DS Lite were backward compatible with Game Boy Advance games.
                     </h1>
                 </div>
 
                 <div className="main-wrapper">
 
-                    {gamesAndroid.map(data => {
+                    {gamesNintendoDS.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -205,4 +205,13 @@ const PlatformAndroid = () => {
     )
 }
 
-export default PlatformAndroid;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(nintendoDSAction(games))
+})
+
+const mapStateToProps = state => ({
+    gamesNintendoDS: state.gamesNintendoDS.gamesNintendoDS,
+    isNintendoDSLoaded: state.gamesNintendoDS.isNintendoDSLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlatformNintendoDS);

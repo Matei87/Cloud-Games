@@ -23,13 +23,34 @@ import Last30Days from './pages/Last30Days/Last30Days';
 import ThisWeek from './pages/ThisWeek/ThisWeek';
 import NextWeek from './pages/NextWeek/NextWeek';
 
+//browse
+import Platforms from './pages/Platforms/Platforms';
+import Stores from './pages/Stores/Stores';
+import Genres from './pages/Genres/Genres';
+
 //platforms
-import PlatformPc from './pages/PC/PC';
-import PlatformPlaystation4 from './pages/Playstation4/Playstation4';
-import PlatformXboxOne from './pages/XboxOne/XboxOne';
-import PlatformNintendoSwitch from './pages/NintendoSwitch/NintendoSwitch';
-import PlatformIos from './pages/iOS/iOS';
-import PlatformAndroid from './pages/Android/Android';
+import PlatformPc from './pages/Platforms/PC/PC';
+import PlatformPlaystation from './pages/Platforms/Playstation/Playstation';
+import PlatformPlaystation2 from './pages/Platforms/Playstation2/Playstation2';
+import PlatformPlaystation3 from './pages/Platforms/Playstation3/Playstation3';
+import PlatformPlaystation4 from './pages/Platforms/Playstation4/Playstation4';
+import PlatformPlaystation5 from './pages/Platforms/Playstation5/Playstation5';
+import PlatformXboxOne from './pages/Platforms/XboxOne/XboxOne';
+import PlatformXboxSeriesSX from './pages/Platforms/XboxSeriesSX/XboxSeriesSX';
+import PlatformXbox360 from './pages/Platforms/Xbox360/Xbox360';
+import PlatformXboxOld from './pages/Platforms/XboxOld/XboxOld';
+import PlatformNintendoSwitch from './pages/Platforms/NintendoSwitch/NintendoSwitch';
+import PlatformNintendoDS from './pages/Platforms/NintendoDS/NintendoDS';
+import PlatformNintendoDSI from './pages/Platforms/NintendoDSI/NintendoDSI';
+import PlatformNintendo3DS from './pages/Platforms/Nintendo3DS/Nintendo3DS';
+import PlatformIos from './pages/Platforms/iOS/iOS';
+import PlatformAndroid from './pages/Platforms/Android/Android';
+import PlatformMacOS from './pages/Platforms/MacOS/MacOS';
+import PlatformLinux from './pages/Platforms/Linux/Linux';
+import PlatformPSVita from './pages/Platforms/PSVita/PSVita';
+import PlatformPSP from './pages/Platforms/PSP/PSP';
+import PlatformWiiU from './pages/Platforms/WiiU/WiiU';
+import PlatformWii from './pages/Platforms/Wii/Wii';
 
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -54,12 +75,32 @@ const App = () => {
           <Route exact path="/this-week" component={ThisWeek} />
           <Route exact path="/next-week" component={NextWeek} />
 
-          <Route exact path="/pc" component={PlatformPc} />
-          <Route exact path="/playstation4" component={PlatformPlaystation4} />
-          <Route exact path="/xbox-one" component={PlatformXboxOne} />
-          <Route exact path="/nintendo-switch" component={PlatformNintendoSwitch} />
-          <Route exact path="/ios" component={PlatformIos} />
-          <Route exact path="/android" component={PlatformAndroid} />
+          <Route exact path="/platforms" component={Platforms} />
+          <Route exact path="/stores" component={Stores} />
+          <Route exact path="/genres" component={Genres} />
+
+          <Route exact path="/games/pc" component={PlatformPc} />
+          <Route exact path="/games/playstation1" component={PlatformPlaystation} />
+          <Route exact path="/games/playstation2" component={PlatformPlaystation2} />
+          <Route exact path="/games/playstation3" component={PlatformPlaystation3} />
+          <Route exact path="/games/playstation4" component={PlatformPlaystation4} />
+          <Route exact path="/games/playstation5" component={PlatformPlaystation5} />
+          <Route exact path="/games/xbox-one" component={PlatformXboxOne} />
+          <Route exact path="/games/xbox-series-x" component={PlatformXboxSeriesSX} />
+          <Route exact path="/games/xbox360" component={PlatformXbox360} />
+          <Route exact path="/games/xbox-old" component={PlatformXboxOld} />
+          <Route exact path="/games/nintendo-switch" component={PlatformNintendoSwitch} />
+          <Route exact path="/games/nintendo-ds" component={PlatformNintendoDS} />
+          <Route exact path="/games/nintendo-dsi" component={PlatformNintendoDSI} />
+          <Route exact path="/games/nintendo-3ds" component={PlatformNintendo3DS} />
+          <Route exact path="/games/ios" component={PlatformIos} />
+          <Route exact path="/games/android" component={PlatformAndroid} />
+          <Route exact path="/games/macos" component={PlatformMacOS} />
+          <Route exact path="/games/linux" component={PlatformLinux} />
+          <Route exact path="/games/ps-vita" component={PlatformPSVita} />
+          <Route exact path="/games/psp" component={PlatformPSP} />
+          <Route exact path="/games/wii-u" component={PlatformWiiU} />
+          <Route exact path="/games/wii" component={PlatformWii} />
 
           <Route exact path="/search" component={Search} />
           <Route exact path="/details/:id" component={Details} />

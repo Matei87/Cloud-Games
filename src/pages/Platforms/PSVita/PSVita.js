@@ -1,27 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import Web from '../../img/web.svg';
 import { Link } from 'react-router-dom';
-import GamesContext from '../../context/GamesContext';
-import Loader from '../../components/Loader/Loader';
+import Web from '../../../img/web.svg';
+import Loader from '../../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
 import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSega } from 'react-icons/si';
 import { MdPhoneAndroid } from 'react-icons/md';
+import { GiGamepad } from 'react-icons/gi';
 
+import Exceptional from '../../../img/exceptional.png';
+import Recommended from '../../../img/recommended.png';
+import Meh from '../../../img/meh.png';
+import Skip from '../../../img/skip.png';
 
-import Exceptional from '../../img/exceptional.png';
-import Recommended from '../../img/recommended.png';
-import Meh from '../../img/meh.png';
-import Skip from '../../img/skip.png';
-
+import { pSVitaAction } from '../../../redux/actions/actions';
 import { connect } from 'react-redux';
 
 
-const Search = ({ searchResults, isSearchLoaded }) => {
-    //const { searchResults, isLoaded } = useContext(GamesContext);
-    console.log('searchResults', searchResults, isSearchLoaded);
+const PlatformPSVita = ({ gamesPSVita, getData, isPSVitaLoaded }) => {
+    console.log(gamesPSVita, isPSVitaLoaded);
+
 
     const setRating = (title) => {
         switch (title) {
@@ -56,7 +56,7 @@ const Search = ({ searchResults, isSearchLoaded }) => {
                 hashtable['pc'] = ["PC"];
             } else if (platforms[i] === 'Xbox Series S/X' || platforms[i] === 'Xbox One' || platforms[i] === 'Xbox 360') {
                 hashtable['xbox'] = ["xbox", 'Xbox Series S/X', 'Xbox 360'];
-            } else if (platforms[i] === 'PlayStation' || platforms[i] === 'PlayStation 3' || platforms[i] === 'PlayStation 4' || platforms[i] === 'PlayStation 5') {
+            } else if (platforms[i] === 'PlayStation' || platforms[i] === 'PlayStation 2' || platforms[i] === 'PlayStation 3' || platforms[i] === 'PlayStation 4' || platforms[i] === 'PlayStation 5') {
                 hashtable['playstation'] = ['PlayStation 3', 'PlayStation 4', 'PlayStation 5'];
             } else if (platforms[i] === 'Nintendo Switch') {
                 hashtable['nintendo_switch'] = ['Nintendo Switch'];
@@ -72,16 +72,16 @@ const Search = ({ searchResults, isSearchLoaded }) => {
                 hashtable['linux'] = ['Linux'];
             } else if (platforms[i] === 'iOS') {
                 hashtable['ios'] = ['iOS'];
-            } else if (platforms[i] === 'Nintendo DS') {
-                hashtable['nintendods'] = ['Nintendo DS'];
-            } else if (platforms[i] === 'Nintendo DS' || platforms[i] === 'Nintendo 3DS' || platforms[i] === 'Game Boy Advance') {
-                hashtable['nintendo3ds'] = ['Nintendo DS', 'Nintendo 3DS', 'Game Boy Advance'];
+            } else if (platforms[i] === 'Nintendo DS' || platforms[i] === 'Nintendo 3DS' || platforms[i] === 'Game Boy Advance' || platforms[i] === 'Game Boy' || platforms[i] === 'Game Boy Color') {
+                hashtable['nintendo3ds'] = ['Nintendo DS', 'Nintendo 3DS', 'Game Boy Advance', 'Game Boy', 'Game Boy Color'];
             } else if (platforms[i] === 'PS Vita') {
                 hashtable['psvita'] = ['PS Vita'];
             } else if (platforms[i] === 'Web') {
                 hashtable['web'] = ['Web'];
             } else if (platforms[i] === 'Dreamcast' || platforms[i] === 'Genesis' || platforms[i] === 'SEGA 32X') {
-                hashtable['dreamcast'] = ['Dreamcast', 'Genesis'];
+                hashtable['dreamcast'] = ['Dreamcast', 'Genesis', 'SEGA 32X'];
+            } else if (platforms[i] === 'GameCube' || platforms[i] === 'SNES' || platforms[i] === 'Nintendo 64') {
+                hashtable['gameCube'] = ['GameCube', 'SNES', 'Nintendo 64'];
             }
         }
         //console.log(Object.keys(hashtable));
@@ -132,18 +132,40 @@ const Search = ({ searchResults, isSearchLoaded }) => {
                 case "dreamcast":
                     return <SiSega key={'dreamcast'} />
                     break;
+                case "gameCube":
+                    return <GiGamepad key={'gameCube'} />
+                    break;
                 default:
                     return null;
             }
         });
     }
 
+    useEffect(() => {
+        getData();
+    }, []);
+
     return (
         <div id="content" className="main-page">
-            <div className="container">
+
+            {isPSVitaLoaded === true ? <div className="container">
+
+                <div className="gamesDetails">
+                    <p>Games for PSVita</p>
+                    <h1 className="gamesDetails">
+                        PS Vita is a handheld video game console released in 2012 by Sony. The platform comes with either 3G+Wi-Fi network or in Wi-Fi only bundle.
+                        There are two hardware variations of the console: original and second (referred to as "slim").
+                        The slim version differs with the display port removed, 3G cut, and internal storage added.
+                        There is also PlayStation TV released on Vita hardware. However, not all the games are compatible with it.
+                        PS Vita is usually considered the most powerful handheld console in the video game history.
+                        Nevertheless, the first-party developers have quickly lost interest in making games for it leaving a platform for third-party titles and port games from previous generations.
+                        A PlayStation Plus support will also be removed from the console by 8th March 2019 likely leading to a halt of overall platform support.
+                    </h1>
+                </div>
+
                 <div className="main-wrapper">
 
-                    {searchResults ? searchResults.map(data => {
+                    {gamesPSVita.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -173,19 +195,23 @@ const Search = ({ searchResults, isSearchLoaded }) => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    })}
 
                 </div>
 
-            </div>
+            </div> : <Loader />}
 
         </div>
     )
 }
 
-const mapStateToProps = state => ({
-    searchResults: state.search.searchResults,
-    isSearchLoaded: state.search.isSearchLoaded
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(pSVitaAction(games))
 })
 
-export default connect(mapStateToProps)(Search);
+const mapStateToProps = state => ({
+    gamesPSVita: state.gamesPSVita.gamesPSVita,
+    isPSVitaLoaded: state.gamesPSVita.isPSVitaLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlatformPSVita);

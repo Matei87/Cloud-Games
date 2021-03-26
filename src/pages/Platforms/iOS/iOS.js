@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import Web from '../../img/web.svg';
-import GamesContext from '../../context/GamesContext';
-import Loader from '../../components/Loader/Loader';
+import Web from '../../../img/web.svg';
+import Loader from '../../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
@@ -11,16 +10,17 @@ import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSe
 import { MdPhoneAndroid } from 'react-icons/md';
 import { GiGamepad } from 'react-icons/gi';
 
-import Exceptional from '../../img/exceptional.png';
-import Recommended from '../../img/recommended.png';
-import Meh from '../../img/meh.png';
-import Skip from '../../img/skip.png';
+import Exceptional from '../../../img/exceptional.png';
+import Recommended from '../../../img/recommended.png';
+import Meh from '../../../img/meh.png';
+import Skip from '../../../img/skip.png';
+
+import { iosAction } from '../../../redux/actions/actions';
+import { connect } from 'react-redux';
 
 
-
-const PlatformNintendoSwitch = () => {
-    const { gamesNintendoSwitch, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(gamesNintendoSwitch, isLoaded);
+const PlatformIos = ({ gamesIos, isIosLoaded, getData }) => {
+    console.log(gamesIos, isIosLoaded);
 
 
     const setRating = (title) => {
@@ -142,32 +142,31 @@ const PlatformNintendoSwitch = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
-    }, []);
+        getData();
+    }, [getData]);
 
 
     return (
         <div id="content" className="main-page">
 
-            {isLoaded === true ? <div className="container">
+            {isIosLoaded === true ? <div className="container">
 
                 <div className="gamesDetails">
-                    <p>Games for Nintendo Switch</p>
+                    <p>Games for iOS</p>
                     <h1 className="gamesDetails">
-                        Nintendo Switch is a hybrid video game console made by Nintendo. The system represents a tablet-like device with a touchscreen with detachable controllers on the sides.
-                        The system can be inserted into a docking station connected to the TV and serve as a home console.
-                        This allows the games on the system to be played both on a big screen or in the handheld with no need to reset the system to change the modes.
-                        The central controller for the Switch is a pair of Joy-Cons – small controllers both of which feature four face buttons, an analog stick, two side buttons, and high-definition vibration.
-                        The controllers can be used separately by different players, together using a grip accessory or attached to the system in handheld mode.
-                        Unlike many previous Nintendo consoles, as for 2019, the system has strong support from third-party developers, especially from the indie scene.
-                        The Switch introduced Nintendo Switch Online, a subscription-based service that resembles Xbox Live Gold and PlayStation Plus.
-                        It allows players to play online multiplayer, offers a selection of classic Nintendo games and lets players use cloud saves.
+                        iOS is an operating system initially developed by Apple and named iPhone OS by the title of the only phone developed by a corporation.
+                        While it was intended for mobile phones and media players at first, it has grown to tablets and TV-console.
+                        The OS is considered the second most famous system after Android. iOS is widely known for its closed source code and high data encryption making it nearly impossible to boot the system on the device other than Apple's.
+                        The system features a lot of apps unique to the Apple users including Siri — a voice assistant which can access apps as well as Game Center — a various apps manager allowing gamers to share their achievements while playing with friends.
+                        App Store is considered to be the most profound mobile application platform with strict selection and moderating policies.
+                        The most popular iOS hack is called Jailbreak and allows the user to overclock the CPU and access the hidden homebrew apps within the system.
                     </h1>
                 </div>
 
+
                 <div className="main-wrapper">
 
-                    {gamesNintendoSwitch.map(data => {
+                    {gamesIos.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -207,4 +206,13 @@ const PlatformNintendoSwitch = () => {
     )
 }
 
-export default PlatformNintendoSwitch;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(iosAction(games))
+})
+
+const mapStateToProps = state => ({
+    gamesIos: state.gamesIos.gamesIos,
+    isIosLoaded: state.gamesIos.isIosLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlatformIos);

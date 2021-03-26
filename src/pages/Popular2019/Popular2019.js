@@ -16,11 +16,13 @@ import Recommended from '../../img/recommended.png';
 import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
+import { popularIn2019Action } from '../../redux/actions/actions';
+import { connect } from 'react-redux';
 
 
-const Popular2019 = () => {
-    const { popularIn2019, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(popularIn2019, isLoaded);
+const Popular2019 = ({ popularIn2019, getData, isPopularIn2019Loaded }) => {
+    // const { popularIn2019, isLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(popularIn2019, getData, isPopularIn2019Loaded);
 
 
     const setRating = (title) => {
@@ -142,7 +144,7 @@ const Popular2019 = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
+        getData();
     }, []);
 
 
@@ -151,7 +153,7 @@ const Popular2019 = () => {
             <div className="container">
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? popularIn2019.map(data => {
+                    {isPopularIn2019Loaded === true ? popularIn2019.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -191,4 +193,13 @@ const Popular2019 = () => {
     )
 }
 
-export default Popular2019;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(popularIn2019Action(games))
+})
+
+const mapStateToProps = state => ({
+    popularIn2019: state.popularIn2019.popularIn2019,
+    isPopularIn2019Loaded: state.popularIn2019.isPopularIn2019Loaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Popular2019);

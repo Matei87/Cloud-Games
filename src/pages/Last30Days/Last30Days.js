@@ -16,10 +16,13 @@ import Recommended from '../../img/recommended.png';
 import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
+import { last30DaysAction } from '../../redux/actions/actions';
+import { connect } from 'react-redux';
 
-const Last30Days = () => {
-    const { gamesLast30Days, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(gamesLast30Days, isLoaded);
+
+const Last30Days = ({ gamesLast30Days, getData, isLast30DaysLoaded }) => {
+    //const { gamesLast30Days, islast30DaysLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(gamesLast30Days, getData, isLast30DaysLoaded);
 
 
     const setRating = (title) => {
@@ -141,8 +144,8 @@ const Last30Days = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
-    }, []);
+        getData();
+    }, [getData]);
 
 
     return (
@@ -150,7 +153,7 @@ const Last30Days = () => {
             <div className="container">
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? gamesLast30Days.map(data => {
+                    {isLast30DaysLoaded === true ? gamesLast30Days.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -190,4 +193,13 @@ const Last30Days = () => {
     )
 }
 
-export default Last30Days;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(last30DaysAction(games))
+})
+
+const mapStateToProps = state => ({
+    gamesLast30Days: state.gameslast30Days.gameslast30Days,
+    isLast30DaysLoaded: state.gameslast30Days.isLast30DaysLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Last30Days);

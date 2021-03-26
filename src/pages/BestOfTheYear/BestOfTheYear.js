@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect, useCallback } from 'react';
 import './BestOfTheYear.scss';
 
 import Web from '../../img/web.svg';
@@ -17,10 +17,12 @@ import Recommended from '../../img/recommended.png';
 import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
+import { connect } from 'react-redux';
+import { BestOfTheYearAction } from '../../redux/actions/actions';
 
-const BestOfTheYear = () => {
-    const { bestOfTheYear, isLoaded, gamesFetch } = useContext(GamesContext);
-    //console.log('bestOfTheYear', bestOfTheYear, isLoaded);
+const BestOfTheYear = ({ bestOfTheYear, getData, isBestOfTheYearLoaded }) => {
+    // const { bestOfTheYear, isLoaded, gamesFetch } = useContext(GamesContext);
+    console.log('bestOfTheYear Component1', bestOfTheYear, getData, isBestOfTheYearLoaded);
 
     const setRating = (title) => {
         switch (title) {
@@ -147,15 +149,15 @@ const BestOfTheYear = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
-    }, []);
+        getData()
+    }, [getData]);
 
     return (
         <div id="content" className="main-page">
             <div className="container">
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? bestOfTheYear.map(data => {
+                    {isBestOfTheYearLoaded === true ? bestOfTheYear.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -195,4 +197,13 @@ const BestOfTheYear = () => {
     )
 }
 
-export default BestOfTheYear;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(BestOfTheYearAction(games))
+})
+
+const mapStateToProps = state => ({
+    bestOfTheYear: state.bestOfTheYear.bestOfTheYear,
+    isBestOfTheYearLoaded: state.bestOfTheYear.isBestOfTheYearLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(BestOfTheYear);

@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import Web from '../../img/web.svg';
-import GamesContext from '../../context/GamesContext';
-import Loader from '../../components/Loader/Loader';
+import Web from '../../../img/web.svg';
+import Loader from '../../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
@@ -11,16 +10,17 @@ import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSe
 import { MdPhoneAndroid } from 'react-icons/md';
 import { GiGamepad } from 'react-icons/gi';
 
-import Exceptional from '../../img/exceptional.png';
-import Recommended from '../../img/recommended.png';
-import Meh from '../../img/meh.png';
-import Skip from '../../img/skip.png';
+import Exceptional from '../../../img/exceptional.png';
+import Recommended from '../../../img/recommended.png';
+import Meh from '../../../img/meh.png';
+import Skip from '../../../img/skip.png';
+
+import { nintendoSwitchAction } from '../../../redux/actions/actions';
+import { connect } from 'react-redux';
 
 
-
-const PlatformPlaystation4 = () => {
-    const { gamesPlaystation4, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(gamesPlaystation4, isLoaded);
+const PlatformNintendoSwitch = ({ gamesNintendoSwitch, isNintendoSwitchLoaded, getData }) => {
+    console.log(gamesNintendoSwitch, isNintendoSwitchLoaded, getData);
 
 
     const setRating = (title) => {
@@ -142,30 +142,32 @@ const PlatformPlaystation4 = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
+        getData();
     }, []);
+
 
     return (
         <div id="content" className="main-page">
 
-            {isLoaded === true ? <div className="container">
+            {isNintendoSwitchLoaded === true ? <div className="container">
 
                 <div className="gamesDetails">
-                    <p>Games for PlayStation 4</p>
+                    <p>Games for Nintendo Switch</p>
                     <h1 className="gamesDetails">
-                        PlayStation 4 is a home video game console launched in 2013 by Sony.
-                        There are currently three versions of the hardware variations: original console (also called "fat");
-                        a slim version with optical audio output removed, weight and size reduced as well as USB interfaces differently placed; and Pro version with 4k and HDR support added and PS VR functions improved.
-                        PS4 supports VR with the special helmet called PS VR. The starting game lineup of the system is considered to be a one of the most successful in history.
-                        The console maintains the status of an exclusive-oriented platform with many remasters and Playstation-only games.
-                        Together with the start of the system, there was a multiplayer requirement introduced — now everyone seeking to play via PlayStation Network must have PS Plus active.
-                        It is a paid subscription granting the player 5 games per month for all three platforms.
+                        Nintendo Switch is a hybrid video game console made by Nintendo. The system represents a tablet-like device with a touchscreen with detachable controllers on the sides.
+                        The system can be inserted into a docking station connected to the TV and serve as a home console.
+                        This allows the games on the system to be played both on a big screen or in the handheld with no need to reset the system to change the modes.
+                        The central controller for the Switch is a pair of Joy-Cons – small controllers both of which feature four face buttons, an analog stick, two side buttons, and high-definition vibration.
+                        The controllers can be used separately by different players, together using a grip accessory or attached to the system in handheld mode.
+                        Unlike many previous Nintendo consoles, as for 2019, the system has strong support from third-party developers, especially from the indie scene.
+                        The Switch introduced Nintendo Switch Online, a subscription-based service that resembles Xbox Live Gold and PlayStation Plus.
+                        It allows players to play online multiplayer, offers a selection of classic Nintendo games and lets players use cloud saves.
                     </h1>
                 </div>
 
                 <div className="main-wrapper">
 
-                    {gamesPlaystation4.map(data => {
+                    {gamesNintendoSwitch.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -205,4 +207,13 @@ const PlatformPlaystation4 = () => {
     )
 }
 
-export default PlatformPlaystation4;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(nintendoSwitchAction(games))
+})
+
+const mapStateToProps = state => ({
+    gamesNintendoSwitch: state.gamesNintendoSwitch.gamesNintendoSwitch,
+    isNintendoSwitchLoaded: state.gamesNintendoSwitch.isNintendoSwitchLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlatformNintendoSwitch);

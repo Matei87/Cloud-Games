@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import Web from '../../img/web.svg';
-import GamesContext from '../../context/GamesContext';
-import Loader from '../../components/Loader/Loader';
+import Web from '../../../img/web.svg';
+import Loader from '../../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
@@ -11,16 +10,17 @@ import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSe
 import { MdPhoneAndroid } from 'react-icons/md';
 import { GiGamepad } from 'react-icons/gi';
 
-import Exceptional from '../../img/exceptional.png';
-import Recommended from '../../img/recommended.png';
-import Meh from '../../img/meh.png';
-import Skip from '../../img/skip.png';
+import Exceptional from '../../../img/exceptional.png';
+import Recommended from '../../../img/recommended.png';
+import Meh from '../../../img/meh.png';
+import Skip from '../../../img/skip.png';
+
+import { nintendoDSIAction } from '../../../redux/actions/actions';
+import { connect } from 'react-redux';
 
 
-
-const PlatformXboxOne = () => {
-    const { gamesXboxOne, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(gamesXboxOne, isLoaded);
+const PlatformNintendoDSI = ({ gamesNintendoDSI, isNintendoDSILoaded, getData }) => {
+    console.log(gamesNintendoDSI, isNintendoDSILoaded, getData);
 
 
     const setRating = (title) => {
@@ -142,29 +142,22 @@ const PlatformXboxOne = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
+        getData();
     }, []);
 
 
     return (
         <div id="content" className="main-page">
 
-            {isLoaded === true ? <div className="container">
+            {isNintendoDSILoaded === true ? <div className="container">
 
                 <div className="gamesDetails">
-                    <p>Games for Xbox One</p>
-                    <h1 className="gamesDetails">
-                        Xbox One is a home video game console released by Microsoft in 2013. Unlike its main competitor — PlayStation 4, the accent in the development was made in multitasking and using a console as a home media player to watch TV, listen to music and play the games.
-                        There is three hardware option available to gamers: original console, One S version (with a smaller body, no external power supply, and native HDR/4k support) and One X (pro-gamer-oriented system with updated hardware and 4k rendering in real time).
-                        While PS4 is known for exclusive-orientation, Xbox One's games are mostly multi-platform titles. This supports Microsoft's initial idea to prevent selling used games between the players.
-                        However, given the competition from the Sony side, the corporation quickly gave up.
-                        Among the notable exclusive games, there are Sunset Overdrive, Halo 5: Guardians and Forza Motorsport 5.
-                    </h1>
+                    <p>Games for Nintendo DSI</p>
                 </div>
 
                 <div className="main-wrapper">
 
-                    {gamesXboxOne.map(data => {
+                    {gamesNintendoDSI.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -204,4 +197,13 @@ const PlatformXboxOne = () => {
     )
 }
 
-export default PlatformXboxOne;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(nintendoDSIAction(games))
+})
+
+const mapStateToProps = state => ({
+    gamesNintendoDSI: state.gamesNintendoDSI.gamesNintendoDSI,
+    isNintendoDSILoaded: state.gamesNintendoDSI.isNintendoDSILoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlatformNintendoDSI);

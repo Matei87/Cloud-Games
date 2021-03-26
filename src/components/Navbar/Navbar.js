@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import './Navbar.scss';
 
 import GamesContext from '../../context/GamesContext';
@@ -9,8 +9,12 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { ImHome } from "react-icons/im";
 
-const Navbar = () => {
-    const { handleSearch } = useContext(GamesContext);
+import { searchAction } from '../../redux/actions/actions';
+import { connect } from 'react-redux';
+
+
+const Navbar = ({ getData }) => {
+    // const { handleSearch } = useContext(GamesContext);
     const [data, setData] = useState('');
 
     let history = useHistory();
@@ -19,7 +23,7 @@ const Navbar = () => {
     const onSubmit = (e) => {
         e.preventDefault();
         console.log(e.target['name'].value);
-        handleSearch(e.target['name'].value);
+        getData(e.target['name'].value);
         history.push("/search");
         setData('');
     }
@@ -27,6 +31,7 @@ const Navbar = () => {
     const handleChange = (e) => {
         setData(e.target.value);
     }
+
 
     return (
         <nav className="navbar navbar-expand-lg fixed-top">
@@ -72,4 +77,9 @@ const Navbar = () => {
     )
 }
 
-export default withRouter(Navbar);
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(searchAction(games))
+})
+
+
+export default connect(null, mapDispatchToProps)(withRouter(Navbar));

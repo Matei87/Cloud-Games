@@ -398,7 +398,7 @@ const Details = (props) => {
 
                                 {platforms ? <>{platforms.map(plat => {
 
-                                    return plat.platform['name'].includes('PC') && plat.requirements !== null ? <div className="requirements" key="requirements">
+                                    return plat.platform['name'].includes('PC') && Object.keys(plat.requirements).length ? <div className="requirements" key="requirements">
                                         <div className="dot"><div className="requirements-title">System Requirements</div></div>
                                         {(plat.requirements['minimum'] && !plat.requirements['recommended']) ? <Fragment>
                                             <div className="nav nav-tabs" id="nav-tab" role="tablist">
@@ -419,19 +419,19 @@ const Details = (props) => {
                                                 </div>
                                             </div>
                                         </Fragment> : <Fragment>
-                                                    <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                                                        <a className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Minimum</a>
-                                                        <a className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Recommended</a>
-                                                    </div>
-                                                    <div className="tab-content" id="nav-tabContent">
-                                                        <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                                            <>{parse(plat.requirements['minimum'])}</>
-                                                        </div>
-                                                        <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                                            <>{parse(plat.requirements['recommended'])}</>
-                                                        </div>
-                                                    </div>
-                                                </Fragment>} </div> : null
+                                            <div className="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <a className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Minimum</a>
+                                                <a className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Recommended</a>
+                                            </div>
+                                            <div className="tab-content" id="nav-tabContent">
+                                                <div className="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                                                    <>{parse(plat.requirements['minimum'])}</>
+                                                </div>
+                                                <div className="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                                    <>{parse(plat.requirements['recommended'])}</>
+                                                </div>
+                                            </div>
+                                        </Fragment>} </div> : null
                                 }
                                 )}</> : null}
 

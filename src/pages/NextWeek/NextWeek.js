@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import Web from '../../img/web.svg';
@@ -16,10 +16,13 @@ import Recommended from '../../img/recommended.png';
 import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
+import { nextWeekAction } from '../../redux/actions/actions';
+import { connect } from 'react-redux';
 
-const NextWeek = () => {
-    const { gamesNextWeek, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(gamesNextWeek, isLoaded);
+
+const NextWeek = ({ gamesNextWeek, isNextWeekLoaded, getData }) => {
+    //const { gamesNextWeek, isNextWeekLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(gamesNextWeek, isNextWeekLoaded, getData);
 
 
     const setRating = (title) => {
@@ -141,7 +144,7 @@ const NextWeek = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
+        getData();
     }, []);
 
 
@@ -150,7 +153,7 @@ const NextWeek = () => {
             <div className="container">
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? gamesNextWeek.map(data => {
+                    {isNextWeekLoaded === true ? gamesNextWeek.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -190,4 +193,13 @@ const NextWeek = () => {
     )
 }
 
-export default NextWeek;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(nextWeekAction(games))
+})
+
+const mapStateToProps = state => ({
+    gamesNextWeek: state.nextWeek.nextWeek,
+    isNextWeekLoaded: state.nextWeek.isNextWeekLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(NextWeek);

@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import Web from '../../img/web.svg';
-import GamesContext from '../../context/GamesContext';
-import Loader from '../../components/Loader/Loader';
+import Web from '../../../img/web.svg';
+import Loader from '../../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
@@ -11,16 +10,17 @@ import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSe
 import { MdPhoneAndroid } from 'react-icons/md';
 import { GiGamepad } from 'react-icons/gi';
 
-import Exceptional from '../../img/exceptional.png';
-import Recommended from '../../img/recommended.png';
-import Meh from '../../img/meh.png';
-import Skip from '../../img/skip.png';
+import Exceptional from '../../../img/exceptional.png';
+import Recommended from '../../../img/recommended.png';
+import Meh from '../../../img/meh.png';
+import Skip from '../../../img/skip.png';
+
+import { playStation5Action } from '../../../redux/actions/actions';
+import { connect } from 'react-redux';
 
 
-
-const PlatformIos = () => {
-    const { gamesIos, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(gamesIos, isLoaded);
+const PlatformPlaystation5 = ({ gamesPlaystation5, getData, isPlayStation5Loaded }) => {
+    console.log(gamesPlaystation5, isPlayStation5Loaded);
 
 
     const setRating = (title) => {
@@ -142,31 +142,21 @@ const PlatformIos = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
+        getData();
     }, []);
-
 
     return (
         <div id="content" className="main-page">
 
-            {isLoaded === true ? <div className="container">
+            {isPlayStation5Loaded === true ? <div className="container">
 
                 <div className="gamesDetails">
-                    <p>Games for iOS</p>
-                    <h1 className="gamesDetails">
-                        iOS is an operating system initially developed by Apple and named iPhone OS by the title of the only phone developed by a corporation.
-                        While it was intended for mobile phones and media players at first, it has grown to tablets and TV-console.
-                        The OS is considered the second most famous system after Android. iOS is widely known for its closed source code and high data encryption making it nearly impossible to boot the system on the device other than Apple's.
-                        The system features a lot of apps unique to the Apple users including Siri — a voice assistant which can access apps as well as Game Center — a various apps manager allowing gamers to share their achievements while playing with friends.
-                        App Store is considered to be the most profound mobile application platform with strict selection and moderating policies.
-                        The most popular iOS hack is called Jailbreak and allows the user to overclock the CPU and access the hidden homebrew apps within the system.
-                    </h1>
+                    <p>Games for PlayStation 5</p>
                 </div>
-
 
                 <div className="main-wrapper">
 
-                    {gamesIos.map(data => {
+                    {gamesPlaystation5.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -206,4 +196,13 @@ const PlatformIos = () => {
     )
 }
 
-export default PlatformIos;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(playStation5Action(games))
+})
+
+const mapStateToProps = state => ({
+    gamesPlaystation5: state.gamesPlaystation5.gamesPlaystation5,
+    isPlayStation5Loaded: state.gamesPlaystation5.isPlayStation5Loaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlatformPlaystation5);

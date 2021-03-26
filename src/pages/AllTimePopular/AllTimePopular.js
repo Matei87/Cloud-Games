@@ -16,11 +16,14 @@ import Recommended from '../../img/recommended.png';
 import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
+import { allTimePopularAction } from '../../redux/actions/actions';
+import { connect } from 'react-redux';
 
 
-const AllTimePopular = () => {
-    const { allTimePopular, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(allTimePopular, isLoaded);
+
+const AllTimePopular = ({ allTimePopular, getData, isAllTimePopularLoaded }) => {
+    //const { allTimePopular, isAllTimePopularLoaded, gamesFetch } = useContext(GamesContext);
+    console.log(allTimePopular, getData, isAllTimePopularLoaded);
 
 
     const setRating = (title) => {
@@ -142,7 +145,7 @@ const AllTimePopular = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
+        getData();
     }, []);
 
 
@@ -151,7 +154,7 @@ const AllTimePopular = () => {
             <div className="container">
                 <div className="main-wrapper">
 
-                    {isLoaded === true ? allTimePopular.map(data => {
+                    {isAllTimePopularLoaded === true ? allTimePopular.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -191,4 +194,13 @@ const AllTimePopular = () => {
     )
 }
 
-export default AllTimePopular;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(allTimePopularAction(games))
+})
+
+const mapStateToProps = state => ({
+    allTimePopular: state.allTimePopular.allTimePopular,
+    isAllTimePopularLoaded: state.allTimePopular.isAllTimePopularLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(AllTimePopular);

@@ -1,9 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
-import Web from '../../img/web.svg';
-import GamesContext from '../../context/GamesContext';
-import Loader from '../../components/Loader/Loader';
+import Web from '../../../img/web.svg';
+import Loader from '../../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
@@ -11,16 +10,17 @@ import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSe
 import { MdPhoneAndroid } from 'react-icons/md';
 import { GiGamepad } from 'react-icons/gi';
 
-import Exceptional from '../../img/exceptional.png';
-import Recommended from '../../img/recommended.png';
-import Meh from '../../img/meh.png';
-import Skip from '../../img/skip.png';
+import Exceptional from '../../../img/exceptional.png';
+import Recommended from '../../../img/recommended.png';
+import Meh from '../../../img/meh.png';
+import Skip from '../../../img/skip.png';
+
+import { nintendo3DSAction } from '../../../redux/actions/actions';
+import { connect } from 'react-redux';
 
 
-
-const PlatformPc = () => {
-    const { gamesPC, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log(gamesPC, isLoaded);
+const PlatformNintendo3DS = ({ gamesNintendo3DS, isNintendo3DSLoaded, getData }) => {
+    console.log(gamesNintendo3DS, isNintendo3DSLoaded, getData);
 
 
     const setRating = (title) => {
@@ -142,32 +142,32 @@ const PlatformPc = () => {
     }
 
     useEffect(() => {
-        gamesFetch();
+        getData();
     }, []);
 
 
     return (
         <div id="content" className="main-page">
 
-            {isLoaded === true ? <div className="container">
+            {isNintendo3DSLoaded === true ? <div className="container">
 
                 <div className="gamesDetails">
-                    <p>Games for PC</p>
-                    <h1>
-                        PC games, or personal computer games, started with the video game crash of 1983. PC games became popular after the development of the microprocessor and microcomputer.
-                        Some of the first PC games were Bertie the Brain, OXO and Spacewar! As the 3D graphics accelerators became faster and CPU power improved, PC games became more realistic and more accessible to produce.
-                        The PC market sales rocketed in the 80s when IBM computers and sound cards were generated. The platform involves different peripherals, gaming hardware, and software.
-                        These are mouse and keyboard; gamepads and motion controllers aren't obligatory, but still popularly accepted. Better hardware improves the game's accuracy; it usually lets the players use more NPCs than equivalents on other platforms.
-                        With the platform, the players can perform every sort of game.
-                        For example, shooters are easy to play due to the mouse controllers.
-                        However, the main reason for the PC games popularity is their lower prices and the backward compatibility with older titles, which leaves much to be desired on cosoles.
+                    <p>Games for Nintendo 3DS</p>
+                    <h1 className="gamesDetails">
+                        Nintendo 3DS is Nintendo’s fifth major portable game console, a successor to the successful Nintendo DS console.
+                        The console’s design shares many similarities with its predecessor, including clamshell design (on most of the models), dual-screen display with the bottom one being touch-sensitive and stylus included with every console for more precise touchscreen input.
+                        One of the most notable new features in the console is its ability to display stereoscopic 3D effects without the use of 3D glasses.
+                        Even though the initial sales of the system were low, it later became a successful product with more than 72 million units sold worldwide.
+                        The console had several redesigns throughout its lifespan: 3DS XL, a bigger model with larger screens, 2DS, a more affordable model without a 3D screen.
+                        The updated versions of the systems called New 3DS, New 3DS XL and New 2DS XL included more powerful hardware, more stable 3D, several exclusive titles and new control features.
+                        Most of the Nintendo classic franchises got their releases on the console.
+                        Aside from first-party titles, the Monster Hunter and Yo-kai Watch series were also very successful on the console.
                     </h1>
                 </div>
 
-
                 <div className="main-wrapper">
 
-                    {gamesPC.map(data => {
+                    {gamesNintendo3DS.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -207,4 +207,13 @@ const PlatformPc = () => {
     )
 }
 
-export default PlatformPc;
+const mapDispatchToProps = dispatch => ({
+    getData: games => dispatch(nintendo3DSAction(games))
+})
+
+const mapStateToProps = state => ({
+    gamesNintendo3DS: state.gamesNintendo3DS.gamesNintendo3DS,
+    isNintendo3DSLoaded: state.gamesNintendo3DS.isNintendo3DSLoaded
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PlatformNintendo3DS);
