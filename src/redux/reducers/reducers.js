@@ -23,8 +23,10 @@ const initialState = {
     isLoaded: false,
 
 }
+
 const bestOfTheYearState = {
     bestOfTheYear: [],
+    totalPages: 0,
     isBestOfTheYearLoaded: false
 }
 export const bestOfTheYearReducer = (state = bestOfTheYearState, action) => {
@@ -34,7 +36,27 @@ export const bestOfTheYearReducer = (state = bestOfTheYearState, action) => {
             return {
                 ...state,
                 bestOfTheYear: action.payload,
+                totalPages: action,
                 isBestOfTheYearLoaded: true
+            }
+        default:
+            return state;
+    }
+}
+const changeBestOfTheYearState = {
+    changeBestOfTheYear: [],
+    page: 1,
+    isChangeBestOfTheYearLoaded: false
+}
+export const changeBestOfTheYearReducer = (state = changeBestOfTheYearState, action) => {
+    console.log('changeBestOfTheYearReducer', action)
+    switch (action.type) {
+        case 'FETCH_BEST_OF_THE_YEAR_NEXT':
+            return {
+                ...state,
+                changeBestOfTheYear: action.payload,
+                page: action,
+                isChangeBestOfTheYearLoaded: true
             }
         default:
             return state;
@@ -43,6 +65,7 @@ export const bestOfTheYearReducer = (state = bestOfTheYearState, action) => {
 
 const popularIn2020State = {
     popularIn2020: [],
+    totalPages: 0,
     isPopularIn2020Loaded: false
 }
 export const popularIn2020Reducer = (state = popularIn2020State, action) => {
@@ -52,7 +75,27 @@ export const popularIn2020Reducer = (state = popularIn2020State, action) => {
             return {
                 ...state,
                 popularIn2020: action.payload,
+                totalPages: action,
                 isPopularIn2020Loaded: true
+            }
+        default:
+            return state;
+    }
+}
+const changePopularIn2020State = {
+    changePopularIn2020: [],
+    page: 1,
+    isChangePopularIn2020Loaded: false
+}
+export const changePopularIn2020Reducer = (state = changePopularIn2020State, action) => {
+    console.log('reducers', action)
+    switch (action.type) {
+        case 'FETCH_POPULAR_IN_2020_NEXT':
+            return {
+                ...state,
+                changePopularIn2020: action.payload,
+                page: action,
+                isChangePopularIn2020Loaded: true
             }
         default:
             return state;
@@ -61,6 +104,7 @@ export const popularIn2020Reducer = (state = popularIn2020State, action) => {
 
 const popularIn2019State = {
     popularIn2019: [],
+    totalPages: 0,
     isPopularIn2019Loaded: false
 }
 export const popularIn2019Reducer = (state = popularIn2019State, action) => {
@@ -70,7 +114,27 @@ export const popularIn2019Reducer = (state = popularIn2019State, action) => {
             return {
                 ...state,
                 popularIn2019: action.payload,
+                totalPages: action,
                 isPopularIn2019Loaded: true
+            }
+        default:
+            return state;
+    }
+}
+const changePopularIn2019State = {
+    changePopularIn2019: [],
+    page: 1,
+    ischangePopularIn2019Loaded: false
+}
+export const changePopularIn2019Reducer = (state = changePopularIn2019State, action) => {
+    console.log('reducers', action)
+    switch (action.type) {
+        case 'FETCH_POPULAR_IN_2019_NEXT':
+            return {
+                ...state,
+                changePopularIn2019: action.payload,
+                page: action,
+                ischangePopularIn2019Loaded: true
             }
         default:
             return state;
@@ -79,6 +143,7 @@ export const popularIn2019Reducer = (state = popularIn2019State, action) => {
 
 const allTimePopularState = {
     allTimePopular: [],
+    totalPages: 0,
     isAllTimePopularLoaded: false
 }
 export const allTimePopularReducer = (state = allTimePopularState, action) => {
@@ -88,7 +153,27 @@ export const allTimePopularReducer = (state = allTimePopularState, action) => {
             return {
                 ...state,
                 allTimePopular: action.payload,
+                totalPages: action,
                 isAllTimePopularLoaded: true
+            }
+        default:
+            return state;
+    }
+}
+const changeAllTimePopularState = {
+    changeAllTimePopular: [],
+    page: 1,
+    ischangeAllTimePopularLoaded: false
+}
+export const changeAllTimePopularReducer = (state = changeAllTimePopularState, action) => {
+    console.log('reducers', action)
+    switch (action.type) {
+        case 'FETCH_ALL_TIME_POPULAR_NEXT':
+            return {
+                ...state,
+                changeAllTimePopular: action.payload,
+                page: action,
+                ischangeAllTimePopularLoaded: true
             }
         default:
             return state;
@@ -97,6 +182,7 @@ export const allTimePopularReducer = (state = allTimePopularState, action) => {
 
 const last30DaysState = {
     gameslast30Days: [],
+    totalPages: 0,
     isLast30DaysLoaded: false
 }
 export const last30DaysReducer = (state = last30DaysState, action) => {
@@ -106,7 +192,27 @@ export const last30DaysReducer = (state = last30DaysState, action) => {
             return {
                 ...state,
                 gameslast30Days: action.payload,
+                totalPages: action,
                 isLast30DaysLoaded: true
+            }
+        default:
+            return state;
+    }
+}
+const changeLast30DaysState = {
+    gamesChangeLast30Days: [],
+    page: 1,
+    isChangeLast30DaysLoaded: false
+}
+export const changeLast30DaysReducer = (state = changeLast30DaysState, action) => {
+    console.log('reducers', action)
+    switch (action.type) {
+        case 'FETCH_GAMES_LAST_30_DAYS_NEXT':
+            return {
+                ...state,
+                gamesChangeLast30Days: action.payload,
+                page: action,
+                isChangeLast30DaysLoaded: true
             }
         default:
             return state;
@@ -115,6 +221,7 @@ export const last30DaysReducer = (state = last30DaysState, action) => {
 
 const thisWeekState = {
     thisWeek: [],
+    totalPages: 0,
     isThisWeekLoaded: false
 }
 export const thisWeekReducer = (state = thisWeekState, action) => {
@@ -124,7 +231,27 @@ export const thisWeekReducer = (state = thisWeekState, action) => {
             return {
                 ...state,
                 thisWeek: action.payload,
+                totalPages: action,
                 isThisWeekLoaded: true
+            }
+        default:
+            return state;
+    }
+}
+const changeThisWeekState = {
+    changeThisWeek: [],
+    page: 1,
+    isChangeThisWeekLoaded: false
+}
+export const changeThisWeekReducer = (state = changeThisWeekState, action) => {
+    console.log('reducers', action)
+    switch (action.type) {
+        case 'FETCH_GAMES_THIS_WEEK_NEXT':
+            return {
+                ...state,
+                changeThisWeek: action.payload,
+                page: action,
+                isChangeThisWeekLoaded: true
             }
         default:
             return state;
@@ -133,6 +260,7 @@ export const thisWeekReducer = (state = thisWeekState, action) => {
 
 const nextWeekState = {
     nextWeek: [],
+    totalPages: 0,
     isNextWeekLoaded: false
 }
 export const nextWeekReducer = (state = nextWeekState, action) => {
@@ -142,7 +270,27 @@ export const nextWeekReducer = (state = nextWeekState, action) => {
             return {
                 ...state,
                 nextWeek: action.payload,
+                totalPages: action,
                 isNextWeekLoaded: true
+            }
+        default:
+            return state;
+    }
+}
+const changeNextWeekState = {
+    changeNextWeek: [],
+    page: 1,
+    isChangeNextWeekLoaded: false
+}
+export const changeNextWeekReducer = (state = changeNextWeekState, action) => {
+    console.log('reducers', action)
+    switch (action.type) {
+        case 'FETCH_GAMES_NEXT_WEEK_NEXT':
+            return {
+                ...state,
+                changeNextWeek: action.payload,
+                page: action,
+                isChangeNextWeekLoaded: true
             }
         default:
             return state;
@@ -208,6 +356,7 @@ export const genresPageReducer = (state = genresState, action) => {
 //PLATFORMS
 const gamesPCState = {
     gamesPC: [],
+    totalPages: 0,
     isGamesPCLoaded: false
 }
 export const gamesPCReducer = (state = gamesPCState, action) => {
@@ -217,6 +366,7 @@ export const gamesPCReducer = (state = gamesPCState, action) => {
             return {
                 ...state,
                 gamesPC: action.payload,
+                totalPages: action,
                 isGamesPCLoaded: true
             }
         default:
@@ -226,6 +376,7 @@ export const gamesPCReducer = (state = gamesPCState, action) => {
 
 const gamesPlaystationState = {
     gamesPlaystation: [],
+    totalPages: 0,
     isPlayStationLoaded: false
 }
 export const gamesPlaystationReducer = (state = gamesPlaystationState, action) => {
@@ -235,6 +386,7 @@ export const gamesPlaystationReducer = (state = gamesPlaystationState, action) =
             return {
                 ...state,
                 gamesPlaystation: action.payload,
+                totalPages: action,
                 isPlayStationLoaded: true
             }
         default:
@@ -244,6 +396,7 @@ export const gamesPlaystationReducer = (state = gamesPlaystationState, action) =
 
 const gamesPlaystation2State = {
     gamesPlaystation2: [],
+    totalPages: 0,
     isPlayStation2Loaded: false
 }
 export const gamesPlaystation2Reducer = (state = gamesPlaystation2State, action) => {
@@ -253,6 +406,7 @@ export const gamesPlaystation2Reducer = (state = gamesPlaystation2State, action)
             return {
                 ...state,
                 gamesPlaystation2: action.payload,
+                totalPages: action,
                 isPlayStation2Loaded: true
             }
         default:
@@ -262,6 +416,7 @@ export const gamesPlaystation2Reducer = (state = gamesPlaystation2State, action)
 
 const gamesPlaystation3State = {
     gamesPlaystation3: [],
+    totalPages: 0,
     isPlayStation3Loaded: false
 }
 export const gamesPlaystation3Reducer = (state = gamesPlaystation3State, action) => {
@@ -271,6 +426,7 @@ export const gamesPlaystation3Reducer = (state = gamesPlaystation3State, action)
             return {
                 ...state,
                 gamesPlaystation3: action.payload,
+                totalPages: action,
                 isPlayStation3Loaded: true
             }
         default:
@@ -280,6 +436,7 @@ export const gamesPlaystation3Reducer = (state = gamesPlaystation3State, action)
 
 const gamesPlaystation4State = {
     gamesPlaystation4: [],
+    totalPages: 0,
     isPlayStation4Loaded: false
 }
 export const gamesPlaystation4Reducer = (state = gamesPlaystation4State, action) => {
@@ -289,6 +446,7 @@ export const gamesPlaystation4Reducer = (state = gamesPlaystation4State, action)
             return {
                 ...state,
                 gamesPlaystation4: action.payload,
+                totalPages: action,
                 isPlayStation4Loaded: true
             }
         default:
@@ -298,6 +456,7 @@ export const gamesPlaystation4Reducer = (state = gamesPlaystation4State, action)
 
 const gamesPlaystation5State = {
     gamesPlaystation5: [],
+    totalPages: 0,
     isPlayStation5Loaded: false
 }
 export const gamesPlaystation5Reducer = (state = gamesPlaystation5State, action) => {
@@ -307,6 +466,7 @@ export const gamesPlaystation5Reducer = (state = gamesPlaystation5State, action)
             return {
                 ...state,
                 gamesPlaystation5: action.payload,
+                totalPages: action,
                 isPlayStation5Loaded: true
             }
         default:
@@ -316,6 +476,7 @@ export const gamesPlaystation5Reducer = (state = gamesPlaystation5State, action)
 
 const gamesXboxOneState = {
     gamesXboxOne: [],
+    totalPages: 0,
     isXboxOneLoaded: false
 }
 export const gamesXboxOneReducer = (state = gamesXboxOneState, action) => {
@@ -325,6 +486,7 @@ export const gamesXboxOneReducer = (state = gamesXboxOneState, action) => {
             return {
                 ...state,
                 gamesXboxOne: action.payload,
+                totalPages: action,
                 isXboxOneLoaded: true
             }
         default:
@@ -334,6 +496,7 @@ export const gamesXboxOneReducer = (state = gamesXboxOneState, action) => {
 
 const gamesXboxSeriesSXState = {
     gamesXboxSeriesSX: [],
+    totalPages: 0,
     isXboxSeriesSXLoaded: false
 }
 export const gamesXboxSeriesSXReducer = (state = gamesXboxSeriesSXState, action) => {
@@ -343,6 +506,7 @@ export const gamesXboxSeriesSXReducer = (state = gamesXboxSeriesSXState, action)
             return {
                 ...state,
                 gamesXboxSeriesSX: action.payload,
+                totalPages: action,
                 isXboxSeriesSXLoaded: true
             }
         default:
@@ -352,6 +516,7 @@ export const gamesXboxSeriesSXReducer = (state = gamesXboxSeriesSXState, action)
 
 const gamesXbox360State = {
     gamesXbox360: [],
+    totalPages: 0,
     isXbox360Loaded: false
 }
 export const gamesXbox360Reducer = (state = gamesXbox360State, action) => {
@@ -361,6 +526,7 @@ export const gamesXbox360Reducer = (state = gamesXbox360State, action) => {
             return {
                 ...state,
                 gamesXbox360: action.payload,
+                totalPages: action,
                 isXbox360Loaded: true
             }
         default:
@@ -370,6 +536,7 @@ export const gamesXbox360Reducer = (state = gamesXbox360State, action) => {
 
 const gamesXboxOldState = {
     gamesXboxOld: [],
+    totalPages: 0,
     isXboxOldLoaded: false
 }
 export const gamesXboxOldReducer = (state = gamesXboxOldState, action) => {
@@ -379,6 +546,7 @@ export const gamesXboxOldReducer = (state = gamesXboxOldState, action) => {
             return {
                 ...state,
                 gamesXboxOld: action.payload,
+                totalPages: action,
                 isXboxOldLoaded: true
             }
         default:
@@ -388,6 +556,7 @@ export const gamesXboxOldReducer = (state = gamesXboxOldState, action) => {
 
 const gamesNintendoSwitchState = {
     gamesNintendoSwitch: [],
+    totalPages: 0,
     isNintendoSwitchLoaded: false
 }
 export const gamesNintendoSwitchReducer = (state = gamesNintendoSwitchState, action) => {
@@ -397,6 +566,7 @@ export const gamesNintendoSwitchReducer = (state = gamesNintendoSwitchState, act
             return {
                 ...state,
                 gamesNintendoSwitch: action.payload,
+                totalPages: action,
                 isNintendoSwitchLoaded: true
             }
         default:
@@ -406,6 +576,7 @@ export const gamesNintendoSwitchReducer = (state = gamesNintendoSwitchState, act
 
 const gamesNintendoDSState = {
     gamesNintendoDS: [],
+    totalPages: 0,
     isNintendoDSLoaded: false
 }
 export const gamesNintendoDSReducer = (state = gamesNintendoDSState, action) => {
@@ -415,6 +586,7 @@ export const gamesNintendoDSReducer = (state = gamesNintendoDSState, action) => 
             return {
                 ...state,
                 gamesNintendoDS: action.payload,
+                totalPages: action,
                 isNintendoDSLoaded: true
             }
         default:
@@ -424,6 +596,7 @@ export const gamesNintendoDSReducer = (state = gamesNintendoDSState, action) => 
 
 const gamesNintendoDSIState = {
     gamesNintendoDSI: [],
+    totalPages: 0,
     isNintendoDSILoaded: false
 }
 export const gamesNintendoDSIReducer = (state = gamesNintendoDSIState, action) => {
@@ -433,6 +606,7 @@ export const gamesNintendoDSIReducer = (state = gamesNintendoDSIState, action) =
             return {
                 ...state,
                 gamesNintendoDSI: action.payload,
+                totalPages: action,
                 isNintendoDSILoaded: true
             }
         default:
@@ -442,6 +616,7 @@ export const gamesNintendoDSIReducer = (state = gamesNintendoDSIState, action) =
 
 const gamesNintendo3DSState = {
     gamesNintendo3DS: [],
+    totalPages: 0,
     isNintendo3DSLoaded: false
 }
 export const gamesNintendo3DSReducer = (state = gamesNintendo3DSState, action) => {
@@ -451,6 +626,7 @@ export const gamesNintendo3DSReducer = (state = gamesNintendo3DSState, action) =
             return {
                 ...state,
                 gamesNintendo3DS: action.payload,
+                totalPages: action,
                 isNintendo3DSLoaded: true
             }
         default:
@@ -460,6 +636,7 @@ export const gamesNintendo3DSReducer = (state = gamesNintendo3DSState, action) =
 
 const gamesIosState = {
     gamesIos: [],
+    totalPages: 0,
     isIosLoaded: false
 }
 export const gamesIosReducer = (state = gamesIosState, action) => {
@@ -469,6 +646,7 @@ export const gamesIosReducer = (state = gamesIosState, action) => {
             return {
                 ...state,
                 gamesIos: action.payload,
+                totalPages: action,
                 isIosLoaded: true
             }
         default:
@@ -478,6 +656,7 @@ export const gamesIosReducer = (state = gamesIosState, action) => {
 
 const gamesAndroidState = {
     gamesAndroid: [],
+    totalPages: 0,
     isAndroidLoaded: false
 }
 export const gamesAndroidReducer = (state = gamesAndroidState, action) => {
@@ -487,6 +666,7 @@ export const gamesAndroidReducer = (state = gamesAndroidState, action) => {
             return {
                 ...state,
                 gamesAndroid: action.payload,
+                totalPages: action,
                 isAndroidLoaded: true
             }
         default:
@@ -496,6 +676,7 @@ export const gamesAndroidReducer = (state = gamesAndroidState, action) => {
 
 const gamesLinuxState = {
     gamesLinux: [],
+    totalPages: 0,
     isLinuxLoaded: false
 }
 export const gamesLinuxReducer = (state = gamesLinuxState, action) => {
@@ -505,6 +686,7 @@ export const gamesLinuxReducer = (state = gamesLinuxState, action) => {
             return {
                 ...state,
                 gamesLinux: action.payload,
+                totalPages: action,
                 isLinuxLoaded: true
             }
         default:
@@ -514,6 +696,7 @@ export const gamesLinuxReducer = (state = gamesLinuxState, action) => {
 
 const gamesMacOSState = {
     gamesMacOS: [],
+    totalPages: 0,
     isMacOSLoaded: false
 }
 export const gamesMacOSReducer = (state = gamesMacOSState, action) => {
@@ -523,6 +706,7 @@ export const gamesMacOSReducer = (state = gamesMacOSState, action) => {
             return {
                 ...state,
                 gamesMacOS: action.payload,
+                totalPages: action,
                 isMacOSLoaded: true
             }
         default:
@@ -532,6 +716,7 @@ export const gamesMacOSReducer = (state = gamesMacOSState, action) => {
 
 const gamesWiiUState = {
     gamesWiiU: [],
+    totalPages: 0,
     isWiiULoaded: false
 }
 export const gamesWiiUReducer = (state = gamesWiiUState, action) => {
@@ -541,6 +726,7 @@ export const gamesWiiUReducer = (state = gamesWiiUState, action) => {
             return {
                 ...state,
                 gamesWiiU: action.payload,
+                totalPages: action,
                 isWiiULoaded: true
             }
         default:
@@ -550,6 +736,7 @@ export const gamesWiiUReducer = (state = gamesWiiUState, action) => {
 
 const gamesWiiState = {
     gamesWii: [],
+    totalPages: 0,
     isWiiLoaded: false
 }
 export const gamesWiiReducer = (state = gamesWiiState, action) => {
@@ -559,6 +746,7 @@ export const gamesWiiReducer = (state = gamesWiiState, action) => {
             return {
                 ...state,
                 gamesWii: action.payload,
+                totalPages: action,
                 isWiiLoaded: true
             }
         default:
@@ -568,6 +756,7 @@ export const gamesWiiReducer = (state = gamesWiiState, action) => {
 
 const gamesPSPState = {
     gamesPSP: [],
+    totalPages: 0,
     isPSPLoaded: false
 }
 export const gamesPSPReducer = (state = gamesPSPState, action) => {
@@ -577,6 +766,7 @@ export const gamesPSPReducer = (state = gamesPSPState, action) => {
             return {
                 ...state,
                 gamesPSP: action.payload,
+                totalPages: action,
                 isPSPLoaded: true
             }
         default:
@@ -586,6 +776,7 @@ export const gamesPSPReducer = (state = gamesPSPState, action) => {
 
 const gamesPSVitaState = {
     gamesPSVita: [],
+    totalPages: 0,
     isPSVitaLoaded: false
 }
 export const gamesPSVitaReducer = (state = gamesPSVitaState, action) => {
@@ -595,6 +786,7 @@ export const gamesPSVitaReducer = (state = gamesPSVitaState, action) => {
             return {
                 ...state,
                 gamesPSVita: action.payload,
+                totalPages: action,
                 isPSVitaLoaded: true
             }
         default:
@@ -606,6 +798,7 @@ export const gamesPSVitaReducer = (state = gamesPSVitaState, action) => {
 // SEARCH
 const searchState = {
     searchResults: [],
+    totalPages: 0,
     isSearchLoaded: false
 }
 export const searchReducer = (state = searchState, action) => {
@@ -615,6 +808,7 @@ export const searchReducer = (state = searchState, action) => {
             return {
                 ...state,
                 searchResults: action.payload,
+                totalPages: action,
                 isSearchLoaded: true
             }
         default:

@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Link } from 'react-router-dom';
 import Web from '../../img/web.svg';
-import GamesContext from '../../context/GamesContext';
 import Loader from '../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
@@ -10,20 +9,20 @@ import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-ic
 import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSega } from 'react-icons/si';
 import { MdPhoneAndroid } from 'react-icons/md';
 import { GiGamepad } from 'react-icons/gi';
+import { BiChevronsLeft, BiChevronsRight } from 'react-icons/bi';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import Exceptional from '../../img/exceptional.png';
 import Recommended from '../../img/recommended.png';
 import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
-import { last30DaysAction } from '../../redux/actions/actions';
+import { last30DaysAction, changeLast30DaysAction } from '../../redux/actions/actions';
 import { connect } from 'react-redux';
 
 
-const Last30Days = ({ gamesLast30Days, getData, isLast30DaysLoaded }) => {
-    //const { gamesLast30Days, islast30DaysLoaded, gamesFetch } = useContext(GamesContext);
+const Last30Days = ({ gamesLast30Days, getData, isLast30DaysLoaded, gamesChangeLast30Days, totalPages, getDatas, startPage, page }) => {
     console.log(gamesLast30Days, getData, isLast30DaysLoaded);
-
 
     const setRating = (title) => {
         switch (title) {
@@ -147,13 +146,57 @@ const Last30Days = ({ gamesLast30Days, getData, isLast30DaysLoaded }) => {
         getData();
     }, [getData]);
 
+    let roundedPages;
+    if (totalPages > 500) {
+        roundedPages = 500;
+    } else {
+        roundedPages = totalPages;
+    }
+
+    const pageLinks = [];
+    for (let i = (startPage || page); (i <= (startPage || page) + 4) && (i <= roundedPages); i++) {
+        pageLinks.push(
+            <li className={(startPage || page) === i ? 'page-item active' : 'page-item'} key={i} onClick={() => getDatas(i)} >
+                <a className="page-link" href="#">{i}</a>
+            </li>)
+    }
+
 
     return (
         <div id="content" className="main-page">
             <div className="container">
+
+                <div id="pagination">
+                    <nav aria-label="Page navigation">
+                        <ul className="pagination">
+                            {(startPage || page) > 1 ? <li className='page-item' onClick={() => getDatas(roundedPages - (roundedPages - 1))} >
+                                <a className="page-link" href="#">
+                                    <BiChevronsLeft />
+                                </a>
+                            </li> : ''}
+                            {(startPage || page) > 1 ? <li className='page-item' onClick={() => getDatas((startPage || page) - 1)} >
+                                <a className="page-link" href="#">
+                                    <FiChevronLeft />
+                                </a>
+                            </li> : ''}
+                            {pageLinks}
+                            {roundedPages > (startPage || page) ? <li className='page-item' onClick={() => getDatas((startPage || page) + 1)} >
+                                <a className="page-link" href="#">
+                                    <FiChevronRight />
+                                </a>
+                            </li> : ''}
+                            {roundedPages > (startPage || page) ? <li className='page-item' onClick={() => getDatas(roundedPages)} >
+                                <a className="page-link" href="#">
+                                    <BiChevronsRight />
+                                </a>
+                            </li> : ''}
+                        </ul>
+                    </nav>
+                </div>
+
                 <div className="main-wrapper">
 
-                    {isLast30DaysLoaded === true ? gamesLast30Days.map(data => {
+                    {isLast30DaysLoaded === true && !gamesChangeLast30Days.length ? gamesLast30Days.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -183,7 +226,37 @@ const Last30Days = ({ gamesLast30Days, getData, isLast30DaysLoaded }) => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    }) : gamesChangeLast30Days.length ? gamesChangeLast30Days.map(data => {
+                        return <div className="wrapper" key={data.id}>
+                            <div className="header">
+                                <img src={data.background_image} alt="background" />
+                            </div>
+                            <div className="body">
+                                <span className="platforms">{data.platforms ? getPlatforms(data.platforms) : null}</span>
+                                <>{data.metacritic ?
+                                    <span className={data.metacritic <= 70 ? `metacritic yellow` :
+                                        data.metacritic >= 71 || data.metacritic <= 100 ? `metacritic green` : null}>{data.metacritic}</span>
+                                    : null}</>
+                            </div>
+                            <div className="footer">
+                                <span className="card-text">{data.name}</span>
+                                {data.ratings.length > 0 ? <>{setRating(data.ratings[0]['title'])}</> : null}
+                            </div>
+
+                            <div className="overlay">
+                                <div className="overlay-content">
+                                    <Link
+                                        className="overlay-content-details"
+                                        to={{
+                                            pathname: `/details/${data.id}`,
+                                            state: { id: data.id }
+                                        }}
+                                    >See More</Link>
+                                    <span className="overlay-content-favorite">< AiFillHeart /></span>
+                                </div>
+                            </div>
+                        </div>
+                    }) : < Loader />}
 
                 </div>
 
@@ -194,12 +267,17 @@ const Last30Days = ({ gamesLast30Days, getData, isLast30DaysLoaded }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getData: games => dispatch(last30DaysAction(games))
+    getData: games => dispatch(last30DaysAction(games)),
+    getDatas: games => dispatch(changeLast30DaysAction(games))
 })
 
 const mapStateToProps = state => ({
-    gamesLast30Days: state.gameslast30Days.gameslast30Days,
-    isLast30DaysLoaded: state.gameslast30Days.isLast30DaysLoaded
+    gamesLast30Days: state.gamesLast30Days.gameslast30Days,
+    isLast30DaysLoaded: state.gamesLast30Days.isLast30DaysLoaded,
+    totalPages: state.gamesLast30Days.totalPages.totalPages,
+    gamesChangeLast30Days: state.gamesChangeLast30Days.gamesChangeLast30Days,
+    page: state.gamesChangeLast30Days.page,
+    startPage: state.gamesChangeLast30Days.page.page
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Last30Days);

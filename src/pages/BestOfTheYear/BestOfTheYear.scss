@@ -3,6 +3,43 @@
 
     .container {
             display: block;
+
+            #pagination {
+                margin: 3rem 0;
+                display: flex; justify-content: center;
+
+                nav ul {
+                    margin: 0;
+
+                    .page-item {
+                        margin: 0 .25rem;
+
+                        .page-link {
+                            border-radius: .25rem; padding: .5rem 1rem;
+                            line-height: 1.5; font-size: 1.6rem;
+                            color: #fff;
+                            background: var(--gold); border-color: var(--gold);
+
+                            &:hover {
+                                color: var(--gold); cursor: pointer;
+                                background: var(--background); border-color: var(--background);
+                            }
+                            &:focus {
+                                box-shadow: none !important;
+                            }
+                        }
+                    }
+
+                    .page-item.active {
+
+                        .page-link {
+                            background: var(--background); border-color: var(--background);
+                            color: var(--gold); 
+                        }
+                    }
+                }
+            }
+
             .gamesDetails {
                 
                 text-align: left;
@@ -25,7 +62,7 @@
         .main-wrapper {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            //grid-template-rows: repeat(2, 1fr);
+            flex-direction: column;
             grid-gap: 2rem;
 
             .wrapper {
@@ -190,4 +227,35 @@
             }
         }
     }
+}
+
+
+
+
+
+/* Extra small devices */
+@media (max-width: 575.98px) {
+    #pagination {
+        overflow: hidden !important;
+    }
+}
+  
+/* Small devices */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  
+}
+  
+/* Medium devices */
+@media (min-width: 768px) and (max-width: 991.98px) { 
+   
+}
+  
+/* Large devices */
+@media (min-width: 992px) and (max-width: 1199.98px) { 
+  
+}
+  
+/* Extra large devices */
+@media (min-width: 1200px) { 
+    
 }

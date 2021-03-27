@@ -1,9 +1,8 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import './BestOfTheYear.scss';
 
 import Web from '../../img/web.svg';
 import { Link } from 'react-router-dom';
-import GamesContext from '../../context/GamesContext';
 import Loader from '../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
@@ -11,6 +10,8 @@ import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-ic
 import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita, SiSega } from 'react-icons/si';
 import { MdPhoneAndroid } from 'react-icons/md';
 import { GiGamepad } from 'react-icons/gi';
+import { BiChevronsLeft, BiChevronsRight } from 'react-icons/bi';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import Exceptional from '../../img/exceptional.png';
 import Recommended from '../../img/recommended.png';
@@ -18,11 +19,11 @@ import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
 import { connect } from 'react-redux';
-import { BestOfTheYearAction } from '../../redux/actions/actions';
+import { BestOfTheYearAction, changeBestOfTheYearAction } from '../../redux/actions/actions';
 
-const BestOfTheYear = ({ bestOfTheYear, getData, isBestOfTheYearLoaded }) => {
-    // const { bestOfTheYear, isLoaded, gamesFetch } = useContext(GamesContext);
-    console.log('bestOfTheYear Component1', bestOfTheYear, getData, isBestOfTheYearLoaded);
+const BestOfTheYear = ({ bestOfTheYear, getData, isBestOfTheYearLoaded, totalPages, changeBestOfTheYear, getDatas, startPage, page }) => {
+    console.log('bestOfTheYear Component1', bestOfTheYear, getData, isBestOfTheYearLoaded, totalPages);
+
 
     const setRating = (title) => {
         switch (title) {
@@ -42,12 +43,6 @@ const BestOfTheYear = ({ bestOfTheYear, getData, isBestOfTheYearLoaded }) => {
                 return null;
         }
     }
-
-    // const name = (name) => {
-    //     let pieces = name.toLowerCase().split(' ');
-    //     let newWords = pieces.map(word => word.charAt(0).toUpperCase() + word.slice(1));
-    //     return newWords.join(' ');
-    // }
 
     const getPlatforms = (platform) => {
         let platforms = [];
@@ -149,15 +144,61 @@ const BestOfTheYear = ({ bestOfTheYear, getData, isBestOfTheYearLoaded }) => {
     }
 
     useEffect(() => {
-        getData()
+        getData();
     }, [getData]);
+
+    let roundedPages;
+    if (totalPages > 500) {
+        roundedPages = 500;
+    } else {
+        roundedPages = totalPages;
+    }
+
+    const pageLinks = [];
+    for (let i = (startPage || page); (i <= (startPage || page) + 4) && (i <= roundedPages); i++) {
+        pageLinks.push(
+            <li className={(startPage || page) === i ? 'page-item active' : 'page-item'} key={i} onClick={() => getDatas(i)} >
+                <a className="page-link" href="#">{i}</a>
+            </li>)
+    }
+    console.log('changeBestOfTheYear', changeBestOfTheYear, pageLinks, page, startPage)
+
 
     return (
         <div id="content" className="main-page">
             <div className="container">
+
+                <div id="pagination">
+                    <nav aria-label="Page navigation">
+                        <ul className="pagination">
+                            {(startPage || page) > 1 ? <li className='page-item' onClick={() => getDatas(roundedPages - (roundedPages - 1))} >
+                                <a className="page-link" href="#">
+                                    <BiChevronsLeft />
+                                </a>
+                            </li> : ''}
+                            {(startPage || page) > 1 ? <li className='page-item' onClick={() => getDatas((startPage || page) - 1)} >
+                                <a className="page-link" href="#">
+                                    <FiChevronLeft />
+                                </a>
+                            </li> : ''}
+                            {pageLinks}
+                            {roundedPages > (startPage || page) ? <li className='page-item' onClick={() => getDatas((startPage || page) + 1)} >
+                                <a className="page-link" href="#">
+                                    <FiChevronRight />
+                                </a>
+                            </li> : ''}
+                            {roundedPages > (startPage || page) ? <li className='page-item' onClick={() => getDatas(roundedPages)} >
+                                <a className="page-link" href="#">
+                                    <BiChevronsRight />
+                                </a>
+                            </li> : ''}
+                        </ul>
+                    </nav>
+                </div>
+
                 <div className="main-wrapper">
 
-                    {isBestOfTheYearLoaded === true ? bestOfTheYear.map(data => {
+                    {isBestOfTheYearLoaded === true && !changeBestOfTheYear.length ? bestOfTheYear.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -187,7 +228,37 @@ const BestOfTheYear = ({ bestOfTheYear, getData, isBestOfTheYearLoaded }) => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    }) : changeBestOfTheYear.length ? changeBestOfTheYear.map(data => {
+                        return <div className="wrapper" key={data.id}>
+                            <div className="header">
+                                <img src={data.background_image} alt="background" />
+                            </div>
+                            <div className="body">
+                                <span className="platforms">{data.platforms ? getPlatforms(data.platforms) : null}</span>
+                                <>{data.metacritic ?
+                                    <span className={data.metacritic <= 70 ? `metacritic yellow` :
+                                        data.metacritic >= 71 || data.metacritic <= 100 ? `metacritic green` : null}>{data.metacritic}</span>
+                                    : null}</>
+                            </div>
+                            <div className="footer">
+                                <span className="card-text">{data.name}</span>
+                                {data.ratings.length > 0 ? <>{setRating(data.ratings[0]['title'])}</> : null}
+                            </div>
+
+                            <div className="overlay">
+                                <div className="overlay-content">
+                                    <Link
+                                        className="overlay-content-details"
+                                        to={{
+                                            pathname: `/details/${data.id}`,
+                                            state: { id: data.id }
+                                        }}
+                                    >See More</Link>
+                                    <span className="overlay-content-favorite">< AiFillHeart /></span>
+                                </div>
+                            </div>
+                        </div>
+                    }) : < Loader />}
 
                 </div>
 
@@ -198,12 +269,17 @@ const BestOfTheYear = ({ bestOfTheYear, getData, isBestOfTheYearLoaded }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getData: games => dispatch(BestOfTheYearAction(games))
+    getData: games => dispatch(BestOfTheYearAction(games)),
+    getDatas: games => dispatch(changeBestOfTheYearAction(games))
 })
 
 const mapStateToProps = state => ({
     bestOfTheYear: state.bestOfTheYear.bestOfTheYear,
-    isBestOfTheYearLoaded: state.bestOfTheYear.isBestOfTheYearLoaded
+    isBestOfTheYearLoaded: state.bestOfTheYear.isBestOfTheYearLoaded,
+    totalPages: state.bestOfTheYear.totalPages.totalPages,
+    changeBestOfTheYear: state.changeBestOfTheYear.changeBestOfTheYear,
+    page: state.changeBestOfTheYear.page,
+    startPage: state.changeBestOfTheYear.page.page
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BestOfTheYear);

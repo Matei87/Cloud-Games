@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Web from '../../img/web.svg';
 import { Link } from 'react-router-dom';
-import GamesContext from '../../context/GamesContext';
 import Loader from '../../components/Loader/Loader';
 
 import { FaXbox, FaPlaystation, FaLinux } from 'react-icons/fa';
 import { AiFillWindows, AiFillAndroid, AiFillApple, AiFillHeart } from 'react-icons/ai';
 import { SiNintendoswitch, SiNintendo3Ds, SiWii, SiWiiu, SiPlaystationvita } from 'react-icons/si';
 import { MdPhoneAndroid } from 'react-icons/md';
-
+import { BiChevronsLeft, BiChevronsRight } from 'react-icons/bi';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 import Exceptional from '../../img/exceptional.png';
 import Recommended from '../../img/recommended.png';
 import Meh from '../../img/meh.png';
 import Skip from '../../img/skip.png';
 
-import { thisWeekAction } from '../../redux/actions/actions';
+import { thisWeekAction, changeThisWeekAction } from '../../redux/actions/actions';
 import { connect } from 'react-redux';
 
 
@@ -137,20 +137,64 @@ const getPlatforms = (platform) => {
 }
 
 
-const ThisWeek = ({ gamesThisWeek, getData, isThisWeekLoaded }) => {
-    //const { gamesThisWeek, isThisWeekLoaded } = useContext(GamesContext);
+const ThisWeek = ({ gamesThisWeek, getData, isThisWeekLoaded, totalPages, changeThisWeek, getDatas, startPage, page }) => {
     console.log(gamesThisWeek, getData, isThisWeekLoaded);
 
     useEffect(() => {
         getData();
     }, [getData])
 
+    let roundedPages;
+    if (totalPages > 500) {
+        roundedPages = 500;
+    } else {
+        roundedPages = totalPages;
+    }
+
+    const pageLinks = [];
+    for (let i = (startPage || page); (i <= (startPage || page) + 4) && (i <= roundedPages); i++) {
+        pageLinks.push(
+            <li className={(startPage || page) === i ? 'page-item active' : 'page-item'} key={i} onClick={() => getDatas(i)} >
+                <a className="page-link" href="#">{i}</a>
+            </li>)
+    }
+
+
     return (
         <div id="content" className="main-page">
             <div className="container">
+
+                <div id="pagination">
+                    <nav aria-label="Page navigation">
+                        <ul className="pagination">
+                            {(startPage || page) > 1 ? <li className='page-item' onClick={() => getDatas(roundedPages - (roundedPages - 1))} >
+                                <a className="page-link" href="#">
+                                    <BiChevronsLeft />
+                                </a>
+                            </li> : ''}
+                            {(startPage || page) > 1 ? <li className='page-item' onClick={() => getDatas((startPage || page) - 1)} >
+                                <a className="page-link" href="#">
+                                    <FiChevronLeft />
+                                </a>
+                            </li> : ''}
+                            {pageLinks}
+                            {roundedPages > (startPage || page) ? <li className='page-item' onClick={() => getDatas((startPage || page) + 1)} >
+                                <a className="page-link" href="#">
+                                    <FiChevronRight />
+                                </a>
+                            </li> : ''}
+                            {roundedPages > (startPage || page) ? <li className='page-item' onClick={() => getDatas(roundedPages)} >
+                                <a className="page-link" href="#">
+                                    <BiChevronsRight />
+                                </a>
+                            </li> : ''}
+                        </ul>
+                    </nav>
+                </div>
+
                 <div className="main-wrapper">
 
-                    {isThisWeekLoaded === true ? gamesThisWeek.map(data => {
+                    {isThisWeekLoaded === true && !changeThisWeek.length ? gamesThisWeek.map(data => {
                         return <div className="wrapper" key={data.id}>
                             <div className="header">
                                 <img src={data.background_image} alt="background" />
@@ -180,7 +224,37 @@ const ThisWeek = ({ gamesThisWeek, getData, isThisWeekLoaded }) => {
                                 </div>
                             </div>
                         </div>
-                    }) : <Loader />}
+                    }) : changeThisWeek.length ? changeThisWeek.map(data => {
+                        return <div className="wrapper" key={data.id}>
+                            <div className="header">
+                                <img src={data.background_image} alt="background" />
+                            </div>
+                            <div className="body">
+                                <span className="platforms">{data.platforms ? getPlatforms(data.platforms) : null}</span>
+                                <>{data.metacritic ?
+                                    <span className={data.metacritic <= 70 ? `metacritic yellow` :
+                                        data.metacritic >= 71 || data.metacritic <= 100 ? `metacritic green` : null}>{data.metacritic}</span>
+                                    : null}</>
+                            </div>
+                            <div className="footer">
+                                <span className="card-text">{data.name}</span>
+                                {data.ratings.length > 0 ? <>{setRating(data.ratings[0]['title'])}</> : null}
+                            </div>
+
+                            <div className="overlay">
+                                <div className="overlay-content">
+                                    <Link
+                                        className="overlay-content-details"
+                                        to={{
+                                            pathname: `/details/${data.id}`,
+                                            state: { id: data.id }
+                                        }}
+                                    >See More</Link>
+                                    <span className="overlay-content-favorite">< AiFillHeart /></span>
+                                </div>
+                            </div>
+                        </div>
+                    }) : < Loader />}
 
                 </div>
 
@@ -191,12 +265,17 @@ const ThisWeek = ({ gamesThisWeek, getData, isThisWeekLoaded }) => {
 }
 
 const mapDispatchToProps = dispatch => ({
-    getData: games => dispatch(thisWeekAction(games))
+    getData: games => dispatch(thisWeekAction(games)),
+    getDatas: games => dispatch(changeThisWeekAction(games))
 })
 
 const mapStateToProps = state => ({
     gamesThisWeek: state.thisWeek.thisWeek,
-    isThisWeekLoaded: state.thisWeek.isThisWeekLoaded
+    isThisWeekLoaded: state.thisWeek.isThisWeekLoaded,
+    totalPages: state.thisWeek.totalPages.totalPages,
+    changeThisWeek: state.changeThisWeek.changeThisWeek,
+    page: state.changeThisWeek.page,
+    startPage: state.changeThisWeek.page.page
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ThisWeek);

@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 import {
-    bestOfTheYearReducer, popularIn2020Reducer, popularIn2019Reducer, allTimePopularReducer,
-    last30DaysReducer, thisWeekReducer, nextWeekReducer, gamesPCReducer, platformsPageReducer,
+    changeBestOfTheYearReducer, bestOfTheYearReducer, popularIn2020Reducer, changePopularIn2020Reducer,
+    popularIn2019Reducer, changePopularIn2019Reducer, allTimePopularReducer, changeAllTimePopularReducer,
+    last30DaysReducer, changeLast30DaysReducer, thisWeekReducer, changeThisWeekReducer,
+    nextWeekReducer, changeNextWeekReducer, gamesPCReducer, platformsPageReducer,
     storesPageReducer, genresPageReducer, gamesPlaystationReducer, gamesPlaystation2Reducer,
     gamesPlaystation3Reducer, gamesPlaystation4Reducer, gamesPlaystation5Reducer,
     gamesXboxOneReducer, gamesXboxSeriesSXReducer, gamesXbox360Reducer, gamesXboxOldReducer,
@@ -12,12 +14,19 @@ import {
 
 const rootReducer = combineReducers({
     bestOfTheYear: bestOfTheYearReducer,
+    changeBestOfTheYear: changeBestOfTheYearReducer,
     popularIn2020: popularIn2020Reducer,
+    changePopularIn2020: changePopularIn2020Reducer,
     popularIn2019: popularIn2019Reducer,
+    changePopularIn2019: changePopularIn2019Reducer,
     allTimePopular: allTimePopularReducer,
-    gameslast30Days: last30DaysReducer,
+    changeAllTimePopular: changeAllTimePopularReducer,
+    gamesLast30Days: last30DaysReducer,
+    gamesChangeLast30Days: changeLast30DaysReducer,
     thisWeek: thisWeekReducer,
+    changeThisWeek: changeThisWeekReducer,
     nextWeek: nextWeekReducer,
+    changeNextWeek: changeNextWeekReducer,
     platformsPage: platformsPageReducer,
     storesPage: storesPageReducer,
     genresPage: genresPageReducer,
